@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Blog Post Manager</h1>
+        
+        <form id="postForm">
+            <input type="hidden" id="postId">
+            <input type="text" id="title" placeholder="Title" required>
+            <input type="text" id="author" placeholder="Author" required>
+            <textarea id="content" placeholder="Content" required></textarea>
+            <button type="submit">Add Post</button>
+        </form>
+
+        <div id="postsList"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

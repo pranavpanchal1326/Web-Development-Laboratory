@@ -1,0 +1,88 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 500px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.input-section {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+#taskInput {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+}
+
+#addBtn {
+    padding: 0.5rem 1rem;
+    background: #4CAF50;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#taskList {
+    list-style: none;
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.7rem;
+    background: #f9f9f9;
+    margin-bottom: 0.5rem;
+    border-left: 3px solid #4CAF50;
+}
+
+.task-item.completed {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.task-text {
+    flex: 1;
+    cursor: pointer;
+}
+
+.task-actions button {
+    margin-left: 0.3rem;
+    padding: 0.3rem 0.6rem;
+    border: none;
+    cursor: pointer;
+}
+
+.edit-btn {
+    background: #2196F3;
+    color: #fff;
+}
+
+.delete-btn {
+    background: #f44336;
+    color: #fff;
+}

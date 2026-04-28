@@ -1,0 +1,25 @@
+node_modules/
+.env
+
+# Eclipse
+.classpath
+.project
+.settings/
+build/
+bin/
+
+# npm
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# Build outputs
+dist/
+out/
+.next/
+.nuxt/
+
+# OS files
+.DS_Store
+Thumbs.db

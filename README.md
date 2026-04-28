@@ -36,24 +36,35 @@ Each subdirectory is a self-contained module. Below is a high-level breakdown of
 
 ```text
 .
-├── API Implementations
-│   ├── Book management API
-│   ├── Bookstore CRUD API
-│   ├── Inventory Management API
-│   └── USER profile API
-├── Full-Stack Applications
-│   ├── MERN STACK chat application
-│   └── Multi user chat application
-├── Web Interfaces & Layouts
-│   ├── Bootstrap Buisness Website
-│   ├── Ecommerce landing page
-│   ├── Tech Startup Homepage
-│   └── Travel Blog Layout
-└── UI Utility Modules
-    ├── Accoridan Menu
-    ├── Digital Clock
-    ├── Image slider with jQuery
-    └── Quiz application
+├── Accoridan Menu
+├── assets
+├── Attendance_Standalone
+├── Attendance_Tracker_App
+├── Blog Post Manager
+├── Book management API
+├── Bookstore CRUD API
+├── Bootstrap Buisness Website
+├── Contact List manager
+├── Digital Clock
+├── Ecommerce landing page
+├── Event Promotion page
+├── Event Registration Form
+├── Feedback Form with Validation
+├── Hollywood_Movies_API
+├── HTML_Webpages
+├── Image slider with jQuery
+├── Interactive navigation menu
+├── Inventory Management API
+├── Lightbox image viewer
+├── Live notification system
+├── Login Authentication Page
+├── MERN STACK chat application
+├── MongoDB Integration fo Users
+├── Movie_Database_CRUD
+├── NewReport_API
+├── To-Do List Application
+├── Tomcat_Project
+└── User Registration Form
 ```
 
 ---

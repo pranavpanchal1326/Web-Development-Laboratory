@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heritage Timepieces - Luxury Vintage Watch Collection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/ui-lightness/jquery-ui.css">
+  <style>
+    :root {
+      --primary: #8b5a2b;
+      --primary-dark: #6b4423;
+      --accent: #d4af37;
+      --accent-light: #f4e6a1;
+      --bg-cream: #faf7f0;
+      --bg-paper: #f8f5ee;
+      --bg-dark: #1c1410;
+      --text-dark: #3a2818;
+      --text-medium: #6d5a47;
+      --text-light: #a08875;
+      --border: #e5ddd0;
+      --border-dark: #d1c4b0;
+      --shadow-soft: 0 8px 35px rgba(139, 90, 43, 0.08);
+      --shadow: 0 15px 50px rgba(139, 90, 43, 0.15);
+      --shadow-strong: 0 25px 70px rgba(139, 90, 43, 0.25);
+      --gradient: linear-gradient(135deg, var(--primary), var(--accent));
+      --gradient-subtle: linear-gradient(135deg, var(--accent-light), var(--bg-cream));
+    }
+
+    [data-theme="dark"] {
+      --bg-cream: #1a1a1a;
+      --bg-paper: #242424;
+      --bg-dark: #0d0d0d;
+      --text-dark: #f4f1e8;
+      --text-medium: #c9b99d;
+      --text-light: #a6967f;
+      --border: #3d3731;
+      --border-dark: #4a3f37;
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      background: var(--bg-cream);
+      color: var(--text-dark);
+      line-height: 1.75;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      font-feature-settings: "liga" 1, "clig" 1, "calt" 1;
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-cream);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 4px;
+    }
+
+    /* Header */
+    .header {
+      background: rgba(250, 247, 240, 0.96);
+      backdrop-filter: blur(25px) saturate(1.8);
+      border-bottom: 2px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: all 0.4s ease;
+    }
+
+    [data-theme="dark"] .header {
+      background: rgba(26, 26, 26, 0.96);
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-shadow: 2px 2px 8px rgba(139, 90, 43, 0.15);
+      transition: all 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      color: var(--text-medium);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0.5rem 0;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-link:hover {
+      color: var(--primary);
+      border-bottom-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .theme-toggle {
+      background: var(--gradient);
+      border: none;
+      color: white;
+      padding: 1rem;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow);
+      font-size: 1.2rem;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.15) rotate(15deg);
+      box-shadow: var(--shadow-strong);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 8rem 0 6rem 0;
+      text-align: center;
+      background: var(--gradient-subtle);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(139,90,43,0.08)"/><circle cx="80" cy="80" r="2" fill="rgba(139,90,43,0.08)"/><circle cx="50" cy="10" r="1" fill="rgba(139,90,43,0.08)"/><circle cx="10" cy="80" r="1.5" fill="rgba(139,90,43,0.08)"/></svg>');
+      opacity: 0.4;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 5.5rem;
+      font-weight: 900;
+      margin-bottom: 2rem;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      line-height: 1.1;
+      text-shadow: 3px 3px 10px rgba(139, 90, 43, 0.2);
+      opacity: 0;
+      transform: translateY(50px);
+      animation: heroFadeUp 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    }
+
+    .hero-subtitle {
+      font-size: 1.8rem;
+      color: var(--text-medium);
+      margin-bottom: 3rem;
+      font-style: italic;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: heroFadeUp 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+      animation-delay: 0.2s;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--gradient);
+      color: white;
+      padding: 1.5rem 3rem;
+      border: none;
+      border-radius: 60px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      box-shadow: var(--shadow);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: heroFadeUp 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+      animation-delay: 0.4s;
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: var(--shadow-strong);
+      color: white;
+    }
+
+    @keyframes heroFadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Gallery Section */
+    .gallery-section {
+      padding: 8rem 0;
+      background: var(--bg-cream);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .gallery-container {
+      background: var(--bg-paper);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      padding: 4rem;
+      margin-bottom: 6rem;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .gallery-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: var(--gradient);
+    }
+
+    .gallery {
+      position: relative;
+      height: 600px;
+      border-radius: 25px;
+      overflow: hidden;
+      margin-bottom: 3rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .gallery-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+      border-radius: 25px;
+      filter: sepia(15%) saturate(1.2) brightness(1.05);
+    }
+
+    .gallery-image.active {
+      opacity: 1;
+    }
+
+    .gallery-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 3rem;
+    }
+
+    .gallery-btn {
+      background: var(--gradient);
+      color: white;
+      border: none;
+      padding: 1.25rem 2.5rem;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      box-shadow: var(--shadow-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .gallery-btn:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: var(--shadow);
+    }
+
+    .gallery-indicators {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .indicator {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--border-dark);
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      border: 2px solid transparent;
+    }
+
+    .indicator.active {
+      background: var(--primary);
+      transform: scale(1.4);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(139, 90, 43, 0.15);
+    }
+
+    /* Widgets Grid */
+    .widgets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 3rem;
+      margin-bottom: 6rem;
+    }
+
+    .widget-card {
+      background: var(--bg-paper);
+      border-radius: 25px;
+      padding: 3rem;
+      box-shadow: var(--shadow-soft);
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .widget-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--gradient);
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+    }
+
+    .widget-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .widget-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow);
+    }
+
+    .widget-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--text-dark);
+      font-size: 1.1rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 1.25rem 1.5rem;
+      border: 2px solid var(--border);
+      border-radius: 15px;
+      background: var(--bg-cream);
+      color: var(--text-dark);
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      outline: none;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(139, 90, 43, 0.1);
+      background: white;
+    }
+
+    .btn-primary {
+      width: 100%;
+      background: var(--gradient);
+      color: white;
+      border: none;
+      padding: 1.5rem;
+      border-radius: 15px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      margin-top: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    /* Radio Group */
+    .radio-group {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .radio-item {
+      position: relative;
+    }
+
+    .radio-item input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .radio-label {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.5rem;
+      border: 2px solid var(--border);
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      background: var(--bg-cream);
+      color: var(--text-dark);
+    }
+
+    .radio-item input[type="radio"]:checked + .radio-label {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    /* Tabs */
+    .tabs-container {
+      grid-column: 1 / -1;
+    }
+
+    .ui-tabs {
+      border: none;
+      background: transparent;
+    }
+
+    .ui-tabs .ui-tabs-nav {
+      border: none;
+      background: transparent;
+      padding: 0;
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .ui-tabs .ui-tabs-nav li {
+      border: none;
+      background: transparent;
+      margin: 0;
+    }
+
+    .ui-tabs .ui-tabs-nav li a {
+      padding: 1.25rem 2.5rem;
+      border: 2px solid var(--border);
+      border-radius: 30px;
+      background: var(--bg-cream);
+      color: var(--text-medium);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .ui-tabs .ui-tabs-nav li.ui-tabs-active a {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .ui-tabs .ui-tabs-panel {
+      border: none;
+      background: var(--bg-paper);
+      border-radius: 20px;
+      padding: 3rem;
+      box-shadow: var(--shadow-soft);
+      color: var(--text-dark);
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    /* Interactive Box */
+    .interactive-section {
+      padding: 6rem 0;
+      text-align: center;
+      background: var(--gradient-subtle);
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      margin-bottom: 2rem;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .interactive-box {
+      width: 450px;
+      height: 250px;
+      background: var(--gradient);
+      border-radius: 25px;
+      color: white;
+      font-weight: 700;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 3rem auto;
+      cursor: move;
+      user-select: none;
+      box-shadow: var(--shadow);
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .interactive-box:hover {
+      transform: scale(1.05) rotate(2deg);
+      box-shadow: var(--shadow-strong);
+    }
+
+    /* Features Section */
+    .features-section {
+      padding: 8rem 0;
+      background: var(--bg-paper);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 4rem;
+    }
+
+    .feature-card {
+      text-align: center;
+      padding: 4rem 3rem;
+      background: var(--bg-cream);
+      border-radius: 25px;
+      box-shadow: var(--shadow-soft);
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      border: 1px solid var(--border);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow);
+    }
+
+    .feature-icon {
+      font-size: 4rem;
+      margin-bottom: 2rem;
+      color: var(--primary);
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover .feature-icon {
+      transform: scale(1.1);
+      color: var(--accent);
+    }
+
+    .feature-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+    }
+
+    .feature-description {
+      color: var(--text-medium);
+      line-height: 1.8;
+      font-size: 1.1rem;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--bg-dark);
+      color: white;
+      padding: 6rem 0 3rem 0;
+      text-align: center;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 3rem;
+      margin-bottom: 3rem;
+      text-align: left;
+    }
+
+    .footer-section h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-section ul li a {
+      color: #cccccc;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+    }
+
+    .footer-section ul li a:hover {
+      color: var(--accent);
+      transform: translateX(5px);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #444444;
+      padding-top: 2rem;
+      color: #cccccc;
+      font-style: italic;
+      font-size: 1.1rem;
+    }
+
+    /* Scroll Reveal Animation */
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .scroll-reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Highlight Effect */
+    .highlight {
+      background: var(--accent-light);
+      border-radius: 8px;
+      padding: 0.5rem;
+      transition: all 0.3s ease;
+      transform: scale(1.02);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .hero-title {
+        font-size: 4rem;
+      }
+      
+      .nav-links {
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.8rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.4rem;
+      }
+
+      .nav {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 1.5rem;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+      }
+
+      .widgets-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery {
+        height: 350px;
+      }
+
+      .gallery-container {
+        padding: 2rem;
+      }
+
+      .interactive-box {
+        width: 90%;
+        max-width: 400px;
+        height: 200px;
+      }
+
+      .radio-group {
+        justify-content: center;
+      }
+
+      .gallery-controls {
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .ui-tabs .ui-tabs-nav {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .container {
+        padding: 0 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 2.2rem;
+      }
+
+      .widget-card {
+        padding: 2rem;
+      }
+
+      .gallery-container {
+        padding: 1.5rem;
+      }
+
+      .hero {
+        padding: 4rem 0;
+      }
+
+      .gallery-section, .features-section {
+        padding: 4rem 0;
+      }
+
+      .interactive-section {
+        padding: 4rem 0;
+      }
+    }
+
+    /* Loading Animation */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in-up {
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    /* Accessibility Improvements */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Focus States */
+    *:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    /* Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <nav class="nav">
+      <a href="#" class="logo" tabindex="0">Heritage</a>
+      <ul class="nav-links">
+        <li><a href="#" class="nav-link">Home</a></li>
+        <li><a href="#gallery" class="nav-link">Collection</a></li>
+        <li><a href="#features" class="nav-link">Heritage</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme">
+        <i class="fas fa-moon" aria-hidden="true"></i>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Heritage Timepieces</h1>
+      <p class="hero-subtitle">Where tradition meets timeless elegance. Discover our exquisite collection of vintage masterpieces crafted by master artisans.</p>
+      <a href="#gallery" class="hero-cta">
+        <i class="fas fa-clock" aria-hidden="true"></i>
+        Explore Collection
+      </a>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section class="gallery-section" id="gallery">
+    <div class="container">
+      <div class="gallery-container scroll-reveal">
+        <div class="gallery">
+          <img src="./Vintage-Inspired-Watches-Retro-Nostalgic-Design-Past-History-Historical-MM.avif" alt="Heritage Gold Vintage Watch with Roman Numerals" class="gallery-image active">
+          <img src="./vintage-watch-display-stockcake.jpg" alt="Classic Leather Strap Vintage Watch" class="gallery-image">
+          <img src="./Vintage_Watch_Longines_1024x1024.webp" alt="Vintage Pocket Watch Collection Display" class="gallery-image">
+          <img src="./Longines-Launches-Collectors-Corner-for-Vintage-CPO-Watches-3.jpg" alt="Antique Watch Mechanism Close-up" class="gallery-image">
+          <img src="./s-l400.jpg" alt="Luxury Vintage Chronograph Details" class="gallery-image">
+        </div>
+        <div class="gallery-controls">
+          <button class="gallery-btn" id="prevBtn" aria-label="Previous image">
+            <i class="fas fa-chevron-left"></i> Previous
+          </button>
+          <div class="gallery-indicators" role="tablist" aria-label="Gallery images">
+            <span class="indicator active" data-slide="0" role="tab" aria-selected="true" tabindex="0" aria-label="View first watch"></span>
+            <span class="indicator" data-slide="1" role="tab" aria-selected="false" tabindex="-1" aria-label="View second watch"></span>
+            <span class="indicator" data-slide="2" role="tab" aria-selected="false" tabindex="-1" aria-label="View third watch"></span>
+            <span class="indicator" data-slide="3" role="tab" aria-selected="false" tabindex="-1" aria-label="View fourth watch"></span>
+            <span class="indicator" data-slide="4" role="tab" aria-selected="false" tabindex="-1" aria-label="View fifth watch"></span>
+          </div>
+          <button class="gallery-btn" id="nextBtn" aria-label="Next image">
+            Next <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Widgets -->
+      <div class="widgets-grid">
+        <!-- Search Widget -->
+        <div class="widget-card scroll-reveal">
+          <h3 class="widget-title">
+            <i class="fas fa-search" aria-hidden="true"></i> Find Your Timepiece
+          </h3>
+          <div class="form-group">
+            <label class="form-label" for="vintageSearch">Search Our Collection</label>
+            <input type="text" id="vintageSearch" class="form-control" placeholder="Enter style, era, or brand..." aria-describedby="search-help">
+            <small id="search-help" class="sr-only">Search through our vintage watch collection by style, era, or brand name</small>
+          </div>
+        </div>
+
+        <!-- Purchase Widget -->
+        <div class="widget-card scroll-reveal">
+          <h3 class="widget-title">
+            <i class="fas fa-gem" aria-hidden="true"></i> Acquire Timepiece
+          </h3>
+          <button class="btn-primary" id="purchaseBtn" aria-label="Submit inquiry for selected timepiece">
+            <i class="fas fa-crown" aria-hidden="true"></i> Inquire - $2,850
+          </button>
+        </div>
+
+        <!-- Style Selection Widget -->
+        <div class="widget-card scroll-reveal">
+          <h3 class="widget-title">
+            <i class="fas fa-palette" aria-hidden="true"></i> Select Style
+          </h3>
+          <fieldset>
+            <legend class="sr-only">Choose your preferred watch style</legend>
+            <div class="radio-group">
+              <div class="radio-item">
+                <input type="radio" id="styleClassic" name="style" value="classic" checked>
+                <label for="styleClassic" class="radio-label">
+                  <span style="width: 20px; height: 20px; background: var(--primary); border-radius: 50%; display: block;" aria-hidden="true"></span>
+                  Classic Gold
+                </label>
+              </div>
+              <div class="radio-item">
+                <input type="radio" id="styleVintage" name="style" value="vintage">
+                <label for="styleVintage" class="radio-label">
+                  <span style="width: 20px; height: 20px; background: var(--primary-dark); border-radius: 50%; display: block;" aria-hidden="true"></span>
+                  Vintage Bronze
+                </label>
+              </div>
+              <div class="radio-item">
+                <input type="radio" id="styleAntique" name="style" value="antique">
+                <label for="styleAntique" class="radio-label">
+                  <span style="width: 20px; height: 20px; background: var(--accent); border-radius: 50%; display: block;" aria-hidden="true"></span>
+                  Antique Silver
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <!-- Appointment Widget -->
+        <div class="widget-card scroll-reveal">
+          <h3 class="widget-title">
+            <i class="fas fa-calendar-alt" aria-hidden="true"></i> Private Viewing
+          </h3>
+          <div class="form-group">
+            <label class="form-label" for="appointmentDate">Schedule Appointment</label>
+            <input type="text" id="appointmentDate" class="form-control" placeholder="Select your preferred date" aria-describedby="appointment-help">
+            <small id="appointment-help" class="sr-only">Schedule a private viewing appointment at our showroom</small>
+          </div>
+        </div>
+
+        <!-- Information Tabs Widget -->
+        <div class="widget-card tabs-container scroll-reveal">
+          <h3 class="widget-title">
+            <i class="fas fa-info-circle" aria-hidden="true"></i> Timepiece Details
+          </h3>
+          <div id="vintageTabs">
+            <ul role="tablist">
+              <li><a href="#heritage" role="tab">Heritage</a></li>
+              <li><a href="#testimonials" role="tab">Reviews</a></li>
+              <li><a href="#craftsmanship" role="tab">Craft</a></li>
+            </ul>
+            <div id="heritage" role="tabpanel">
+              <h4>The Heritage Collection</h4>
+              <p><strong>Movement:</strong> Swiss mechanical, hand-wound caliber</p>
+              <p><strong>Case:</strong> 18k gold, 42mm diameter, polished finish</p>
+              <p><strong>Crystal:</strong> Sapphire with anti-reflective coating</p>
+              <p><strong>Water Resistance:</strong> 3 ATM (30 meters)</p>
+              <p><strong>Strap:</strong> Genuine alligator leather, hand-stitched</p>
+              <p><strong>Power Reserve:</strong> 72 hours</p>
+              <p><strong>Limited Edition:</strong> Only 250 pieces worldwide</p>
+            </div>
+            <div id="testimonials" role="tabpanel">
+              <h4>Collector Testimonials</h4>
+              <blockquote>
+                <div style="color: var(--accent); margin-bottom: 1rem; font-size: 1.3rem;">★★★★★</div>
+                <p><strong>Lord Pemberton, Watch Collector</strong> - "An exquisite piece that represents the pinnacle of horological artistry. The attention to detail is simply magnificent."</p>
+              </blockquote>
+              <blockquote>
+                <div style="color: var(--accent); margin-bottom: 1rem; font-size: 1.3rem;">★★★★★</div>
+                <p><strong>Margaret Sinclair, Antique Dealer</strong> - "This timepiece has become the centerpiece of my collection. The craftsmanship is unparalleled."</p>
+              </blockquote>
+              <blockquote>
+                <div style="color: var(--accent); margin-bottom: 1rem; font-size: 1.3rem;">★★★★★</div>
+                <p><strong>Dr. Harrison Wells, Horologist</strong> - "A true investment piece that will be treasured for generations to come."</p>
+              </blockquote>
+            </div>
+            <div id="craftsmanship" role="tabpanel">
+              <h4>Master Craftsmanship</h4>
+              <p><strong>Master Watchmaker:</strong> Johann Zimmermann</p>
+              <p><strong>Years of Experience:</strong> 40+ years in haute horlogerie</p>
+              <p><strong>Manufacturing Time:</strong> 6 months per timepiece</p>
+              <p><strong>Hand Finishing:</strong> 200+ hours of meticulous detail work</p>
+              <p><strong>Certification:</strong> Swiss Official Chronometer Testing Institute (COSC)</p>
+              <p><strong>Materials:</strong> Ethically sourced gold and leather</p>
+              <p><strong>Warranty:</strong> Lifetime service guarantee with authenticity certificate</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Section -->
+      <div class="interactive-section">
+        <h2 class="section-title">Interactive Heritage Experience</h2>
+        <p style="color: var(--text-medium); margin-bottom: 3rem; font-size: 1.2rem; font-style: italic;">Explore the craftsmanship through hands-on interaction</p>
+        <div id="heritageBox" class="interactive-box" tabindex="0" aria-label="Interactive heritage experience - drag and resize">
+          <div style="text-align: center;">
+            <i class="fas fa-hand-rock" style="font-size: 2.5rem; margin-bottom: 1rem; display: block;" aria-hidden="true"></i>
+            <strong>Drag & Resize Heritage</strong>
+            <div style="font-size: 1rem; opacity: 0.8; margin-top: 0.5rem;">Experience Our Legacy</div>
+          </div>
+        </div>
+        <p style="color: var(--text-light); font-size: 1rem; font-style: italic;">This interactive element demonstrates the responsive and flexible nature of our heritage design philosophy.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section" id="features">
+    <div class="container">
+      <h2 class="section-title">Why Choose Heritage Timepieces?</h2>
+      <div class="features-grid">
+        <article class="feature-card scroll-reveal">
+          <div class="feature-icon">
+            <i class="fas fa-gem" aria-hidden="true"></i>
+          </div>
+          <h3 class="feature-title">Exceptional Quality</h3>
+          <p class="feature-description">Each timepiece is meticulously crafted using the finest materials and traditional techniques passed down through generations of master watchmakers.</p>
+        </article>
+        <article class="feature-card scroll-reveal">
+          <div class="feature-icon">
+            <i class="fas fa-certificate" aria-hidden="true"></i>
+          </div>
+          <h3 class="feature-title">Authenticity Guaranteed</h3>
+          <p class="feature-description">Every Heritage timepiece comes with comprehensive documentation, provenance records, and a lifetime authenticity guarantee from our certified experts.</p>
+        </article>
+        <article class="feature-card scroll-reveal">
+          <div class="feature-icon">
+            <i class="fas fa-shield-alt" aria-hidden="true"></i>
+          </div>
+          <h3 class="feature-title">Lifetime Service</h3>
+          <p class="feature-description">Our master craftsmen provide lifetime service and maintenance to ensure your Heritage timepiece remains pristine and functional for generations.</p>
+        </article>
+        <article class="feature-card scroll-reveal">
+          <div class="feature-icon">
+            <i class="fas fa-star" aria-hidden="true"></i>
+          </div>
+          <h3 class="feature-title">Limited Collections</h3>
+          <p class="feature-description">Each Heritage collection is strictly limited to preserve exclusivity and maintain the investment value of your precious timepiece.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Collections</h4>
+          <ul>
+            <li><a href="#" aria-label="View Heritage Chronograph collection">Heritage Chronograph</a></li>
+            <li><a href="#" aria-label="View Vintage Dress watches">Vintage Dress Watches</a></li>
+            <li><a href="#" aria-label="View Pocket Watch collection">Pocket Watch Collection</a></li>
+            <li><a href="#" aria-label="View Limited Edition timepieces">Limited Editions</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#" aria-label="Book private viewing appointment">Private Viewing</a></li>
+            <li><a href="#" aria-label="Learn about authentication services">Authentication</a></li>
+            <li><a href="#" aria-label="Explore restoration services">Restoration</a></li>
+            <li><a href="#" aria-label="Request professional appraisal">Appraisal</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Heritage</h4>
+          <ul>
+            <li><a href="#" aria-label="Read our company story">Our Story</a></li>
+            <li><a href="#" aria-label="Meet our master craftsmen">Master Craftsmen</a></li>
+            <li><a href="#" aria-label="Read customer testimonials">Testimonials</a></li>
+            <li><a href="#" aria-label="View press coverage">Press</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="#" aria-label="Visit Mayfair showroom">Mayfair Showroom</a></li>
+            <li><a href="#" aria-label="Visit Geneva atelier">Geneva Atelier</a></li>
+            <li><a href="#" aria-label="Schedule private appointment">Private Appointments</a></li>
+            <li><a href="#" aria-label="Learn about international shipping">International Shipping</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Heritage Timepieces. Handcrafted with passion and tradition since 1847.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Gallery functionality
+      let currentSlide = 0;
+      const slides = $('.gallery-image');
+      const indicators = $('.indicator');
+      const totalSlides = slides.length;
+
+      function showSlide(index) {
+        slides.removeClass('active');
+        indicators.removeClass('active').attr('aria-selected', 'false').attr('tabindex', '-1');
+        slides.eq(index).addClass('active');
+        indicators.eq(index).addClass('active').attr('aria-selected', 'true').attr('tabindex', '0');
+      }
+
+      function nextSlide() {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        showSlide(currentSlide);
+      }
+
+      function prevSlide() {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        showSlide(currentSlide);
+      }
+
+      $('#nextBtn').click(nextSlide);
+      $('#prevBtn').click(prevSlide);
+
+      indicators.click(function() {
+        currentSlide = $(this).data('slide');
+        showSlide(currentSlide);
+      });
+
+      // Keyboard navigation for indicators
+      indicators.keydown(function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          $(this).click();
+        }
+      });
+
+      // Auto-play gallery with pause on hover
+      let autoPlay = setInterval(nextSlide, 6000);
+      
+      $('.gallery-container').hover(
+        function() { clearInterval(autoPlay); },
+        function() { autoPlay = setInterval(nextSlide, 6000); }
+      );
+
+      // Enhanced autocomplete
+      $('#vintageSearch').autocomplete({
+        source: [
+          "Heritage Chronograph",
+          "Vintage Dress Watch",
+          "Pocket Watch Collection",
+          "Gold Timepiece",
+          "Mechanical Movement",
+          "Swiss Made",
+          "Limited Edition",
+          "Art Deco Style",
+          "Victorian Era",
+          "Antique Collection",
+          "Master Crafted",
+          "Handwound Movement"
+        ],
+        minLength: 2,
+        select: function(event, ui) {
+          console.log('Selected: ' + ui.item.value);
+        }
+      });
+
+      // Purchase button with enhanced feedback
+      $('#purchaseBtn').button().click(function() {
+        const selectedStyle = $('input[name="style"]:checked').val();
+        const styleName = selectedStyle.charAt(0).toUpperCase() + selectedStyle.slice(1);
+        
+        // Add loading state
+        const originalText = $(this).html();
+        $(this).html('<i class="fas fa-spinner fa-spin"></i> Processing...').prop('disabled', true);
+        
+        setTimeout(() => {
+          alert(`Inquiry submitted for Heritage Timepiece (${styleName} style). Our master curator will contact you within 24 hours to discuss this exceptional timepiece.`);
+          $(this).html(originalText).prop('disabled', false);
+        }, 2000);
+      });
+
+      // Enhanced radio buttons
+      $('input[type="radio"]').checkboxradio({
+        icon: false
+      });
+
+      // Enhanced datepicker
+      $('#appointmentDate').datepicker({
+        minDate: 1,
+        maxDate: "+6M",
+        dateFormat: "dd/mm/yy",
+        showAnim: "slideDown",
+        beforeShowDay: function(date) {
+          // Disable weekends for appointments
+          var day = date.getDay();
+          return [(day != 0 && day != 6), "Available", ""];
+        },
+        onSelect: function(dateText) {
+          console.log("Private viewing scheduled for: " + dateText);
+        }
+      });
+
+      // Enhanced tabs
+      $('#vintageTabs').tabs({
+        activate: function(event, ui) {
+          // Smooth transition for tab content
+          ui.newPanel.hide().fadeIn(400);
+        },
+        beforeActivate: function(event, ui) {
+          ui.oldPanel.fadeOut(200);
+        }
+      });
+
+      // Interactive effects for specifications with accessibility
+      $('#heritage p, #craftsmanship p').click(function() {
+        $(this).toggleClass('highlight');
+        
+        // Announce to screen readers
+        if ($(this).hasClass('highlight')) {
+          $(this).attr('aria-selected', 'true');
+        } else {
+          $(this).removeAttr('aria-selected');
+        }
+      });
+
+      // Enhanced draggable and resizable
+      $('#heritageBox').draggable({
+        containment: '.interactive-section',
+        cursor: 'move',
+        opacity: 0.9,
+        revert: 'invalid',
+        start: function() {
+          $(this).addClass('dragging');
+        },
+        stop: function() {
+          $(this).removeClass('dragging');
+        }
+      }).resizable({
+        minWidth: 250,
+        minHeight: 150,
+        maxWidth: 700,
+        maxHeight: 450,
+        handles: 'all',
+        resize: function() {
+          const width = $(this).width();
+          const height = $(this).height();
+          
+          if (width > 500 || height > 300) {
+            $(this).find('div').html(`
+              <div style="text-align: center;">
+                <i class="fas fa-expand-arrows-alt" style="font-size: 2.5rem; margin-bottom: 1rem; display: block;"></i>
+                <strong>Expanded Heritage Experience</strong>
+                <div style="font-size: 1rem; opacity: 0.8; margin-top: 0.5rem;">${width} × ${height}px</div>
+              </div>
+            `);
+          } else {
+            $(this).find('div').html(`
+              <div style="text-align: center;">
+                <i class="fas fa-hand-rock" style="font-size: 2.5rem; margin-bottom: 1rem; display: block;"></i>
+                <strong>Drag & Resize Heritage</strong>
+                <div style="font-size: 1rem; opacity: 0.8; margin-top: 0.5rem;">Experience Our Legacy</div>
+              </div>
+            `);
+          }
+        }
+      });
+
+      // Enhanced theme toggle
+      $('#themeToggle').click(function() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('heritage-theme', newTheme);
+        
+        const icon = $(this).find('i');
+        if (newTheme === 'dark') {
+          icon.removeClass('fa-moon').addClass('fa-sun');
+          $(this).attr('aria-label', 'Switch to light theme');
+        } else {
+          icon.removeClass('fa-sun').addClass('fa-moon');
+          $(this).attr('aria-label', 'Switch to dark theme');
+        }
+      });
+
+      // Load saved theme
+      const savedTheme = localStorage.getItem('heritage-theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        const icon = $('#themeToggle').find('i');
+        if (savedTheme === 'dark') {
+          icon.removeClass('fa-moon').addClass('fa-sun');
+        }
+      }
+
+      // Enhanced smooth scrolling
+      $('a[href^="#"]').click(function(e) {
+        e.preventDefault();
+        const target = $($(this).attr('href'));
+        if (target.length) {
+          $('html, body').animate({
+            scrollTop: target.offset().top - 120
+          }, 1000, 'easeInOutQuart');
+        }
+      });
+
+      // Style selection feedback with pricing
+      $('input[name="style"]').change(function() {
+        const style = $(this).val();
+        const prices = {
+          'classic': { price: '$2,850', description: 'Classic Gold Heritage' },
+          'vintage': { price: '$3,400', description: 'Vintage Bronze Heritage' },
+          'antique': { price: '$4,750', description: 'Antique Silver Heritage' }
+        };
+        
+        const selectedPrice = prices[style];
+        $('#purchaseBtn').html(`<i class="fas fa-crown"></i> Inquire - ${selectedPrice.price}`);
+        
+        // Update aria-label for accessibility
+        $('#purchaseBtn').attr('aria-label', `Submit inquiry for ${selectedPrice.description} timepiece - ${selectedPrice.price}`);
+      });
+
+      // Scroll reveal animation
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+          }
+        });
+      }, observerOptions);
+
+      // Observe elements for scroll reveal
+      $('.scroll-reveal').each(function() {
+        observer.observe(this);
+      });
+
+      // Enhanced keyboard navigation
+      $(document).keydown(function(e) {
+        if (e.key === 'ArrowLeft' && $('.gallery-container:hover').length) {
+          e.preventDefault();
+          prevSlide();
+        } else if (e.key === 'ArrowRight' && $('.gallery-container:hover').length) {
+          e.preventDefault();
+          nextSlide();
+        }
+      });
+
+      // Page load animation
+      setTimeout(function() {
+        $('.fade-in-up').each(function(index) {
+          setTimeout(() => {
+            $(this).addClass('revealed');
+          }, index * 100);
+        });
+      }, 500);
+
+      // Performance monitoring
+      window.addEventListener('load', function() {
+        const loadTime = performance.now();
+        console.log('Heritage Timepieces loaded in', Math.round(loadTime), 'milliseconds');
+      });
+    });
+  </script>
+</body>
+</html>

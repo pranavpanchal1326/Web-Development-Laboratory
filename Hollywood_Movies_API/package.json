@@ -1,0 +1,27 @@
+{
+  "name": "hollywood-movies-api",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "🎬 Beautiful RESTful API for Hollywood movies",
+  "main": "src/app.js",
+  "scripts": {
+    "dev": "nodemon src/app.js",
+    "start": "node src/app.js",
+    "lint": "eslint src/**/*.js",
+    "format": "prettier --write src/**/*.js"
+  },
+  "keywords": ["express", "rest", "api", "movies", "beautiful"],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.0.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "eslint": "^8.45.0",
+    "prettier": "^3.0.0"
+  }
+}

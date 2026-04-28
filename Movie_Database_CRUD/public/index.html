@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MovieVault · Minimal CRUD</title>
+
+  <!-- SEO basics -->
+  <meta name="description" content="MovieVault — Aesthetic minimal CRUD app for managing movies with MongoDB, Express and triple-theme UI." />
+  <meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f6f7fb" media="(prefers-color-scheme: light)">
+  <link rel="icon" href="data:,"><!-- prevents favicon 404 -->
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <!-- Aurora/Noise background -->
+  <div id="bg-aurora" aria-hidden="true"></div>
+
+  <div class="app">
+    <!-- Header -->
+    <header class="header" role="banner">
+      <div class="container header-content">
+        <div class="logo" aria-label="MovieVault logo">
+          <i class="fas fa-film" aria-hidden="true"></i>
+          <h1>MovieVault</h1>
+          <span class="tag">Minimal</span>
+        </div>
+
+        <div class="header-actions">
+          <div class="theme-wrap" role="group" aria-label="Theme switcher">
+            <button class="btn icon-btn" id="themePrev" title="Previous theme" aria-label="Previous theme">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="btn icon-btn" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+              <i class="fas fa-moon"></i>
+            </button>
+            <button class="btn icon-btn" id="themeNext" title="Next theme" aria-label="Next theme">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+
+          <button class="btn btn-primary" id="addMovieBtn">
+            <i class="fas fa-plus" aria-hidden="true"></i>
+            Add Movie
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="main" role="main">
+      <div class="container">
+        <!-- Search and Filter -->
+        <section class="search-section" aria-labelledby="searchTitle">
+          <h2 id="searchTitle" class="hide">Search and Filter</h2>
+          <div class="search-container">
+            <div class="search-box">
+              <i class="fas fa-search" aria-hidden="true"></i>
+              <input
+                type="text"
+                id="searchInput"
+                placeholder="Search movies..."
+                aria-label="Search movies by title or director"
+                autocomplete="off"
+                inputmode="search"
+              />
+            </div>
+
+            <label for="genreFilter" class="hide">Genre filter</label>
+            <select id="genreFilter" class="filter-select" aria-label="Filter by genre">
+              <option value="all">All Genres</option>
+              <option>Action</option><option>Adventure</option><option>Animation</option>
+              <option>Comedy</option><option>Crime</option><option>Documentary</option>
+              <option>Drama</option><option>Fantasy</option><option>Horror</option>
+              <option>Mystery</option><option>Romance</option><option>Sci-Fi</option>
+              <option>Thriller</option><option>War</option><option>Western</option>
+            </select>
+          </div>
+        </section>
+
+        <!-- Movies Grid -->
+        <section class="movies-section" aria-labelledby="moviesListTitle">
+          <h2 id="moviesListTitle" class="hide">Movies</h2>
+
+          <div class="movies-grid" id="moviesGrid" role="list">
+            <!-- Cards injected via JS -->
+          </div>
+
+          <div class="loading" id="loading" role="status" aria-live="polite">
+            <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>
+            <p>Loading movies...</p>
+          </div>
+
+          <div class="empty-state" id="emptyState" hidden>
+            <i class="fas fa-border-all" aria-hidden="true"></i>
+            <h3>No movies found</h3>
+            <p>Try adjusting your search or filter criteria</p>
+          </div>
+        </section>
+
+        <!-- Pagination -->
+        <nav class="pagination-section" aria-label="Pagination">
+          <div class="pagination" id="pagination"></div>
+        </nav>
+      </div>
+    </main>
+
+    <!-- Modal -->
+    <div class="modal" id="movieModal" aria-hidden="true" aria-labelledby="modalTitle" role="dialog">
+      <div class="modal-content" role="document">
+        <div class="modal-header">
+          <h2 id="modalTitle">Add Movie</h2>
+          <button class="modal-close" id="modalClose" aria-label="Close modal">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <form id="movieForm" class="movie-form" novalidate>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input id="title" name="title" required autocomplete="off" />
+            </div>
+
+            <div class="form-group">
+              <label for="director">Director</label>
+              <input id="director" name="director" required autocomplete="off" />
+            </div>
+
+            <div class="form-group">
+              <label for="genre">Genre</label>
+              <select id="genre" name="genre" required>
+                <option value="">Select</option>
+                <option>Action</option><option>Adventure</option><option>Animation</option>
+                <option>Comedy</option><option>Crime</option><option>Documentary</option>
+                <option>Drama</option><option>Fantasy</option><option>Horror</option>
+                <option>Mystery</option><option>Romance</option><option>Sci-Fi</option>
+                <option>Thriller</option><option>War</option><option>Western</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="releaseYear">Release Year</label>
+              <input id="releaseYear" name="releaseYear" type="number" min="1888" max="2030" required />
+            </div>
+
+            <div class="form-group">
+              <label for="duration">Duration (min)</label>
+              <input id="duration" name="duration" type="number" min="1" required />
+            </div>
+
+            <div class="form-group">
+              <label for="rating">Rating (0–10)</label>
+              <input id="rating" name="rating" type="number" min="0" max="10" step="0.1" />
+            </div>
+
+            <div class="form-group">
+              <label for="language">Language</label>
+              <input id="language" name="language" required autocomplete="off" />
+            </div>
+
+            <div class="form-group">
+              <label for="country">Country</label>
+              <input id="country" name="country" required autocomplete="off" />
+            </div>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="plot">Plot</label>
+            <textarea id="plot" name="plot" rows="4" placeholder="Enter movie plot..."></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="submitBtn">Save Movie</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="notification" id="notification" role="status" aria-live="polite">
+      <i class="fas fa-check-circle" aria-hidden="true"></i>
+      <span id="notificationText"></span>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+</body>
+</html>

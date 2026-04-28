@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AttendanceTracker Pro - Smart Attendance Management</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .animate-float-delay {
+            animation: float 6s ease-in-out infinite;
+            animation-delay: 2s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .sidebar-active {
+            transform: translateX(0);
+        }
+
+        .sidebar-inactive {
+            transform: translateX(-100%);
+        }
+
+        .chart-container {
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .stat-card {
+            background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .pulse-ring {
+            animation: pulse-ring 2s infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.8);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(2.4);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center">
+                            <i data-lucide="users" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <span class="ml-3 text-xl font-bold gradient-text">AttendanceTracker Pro</span>
+                    </div>
+                    <div class="hidden md:ml-10 md:flex space-x-8">
+                        <a href="#home" class="nav-link text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">Home</a>
+                        <a href="#features" class="nav-link text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">Features</a>
+                        <a href="#dashboard" class="nav-link text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">Dashboard</a>
+                        <a href="#pricing" class="nav-link text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">Pricing</a>
+                        <a href="#contact" class="nav-link text-gray-500 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">Contact</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="showLogin()" class="text-gray-500 hover:text-gray-700 px-3 py-2 text-sm font-medium">Sign In</button>
+                    <button onclick="showRegister()" class="gradient-bg text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">Get Started</button>
+                    <button id="mobile-menu-btn" class="md:hidden p-2">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 md:hidden transform -translate-x-full transition-transform duration-300 ease-in-out">
+        <div class="fixed inset-0 bg-black bg-opacity-25"></div>
+        <div class="relative flex-1 flex flex-col max-w-xs w-full bg-white">
+            <div class="absolute top-0 right-0 -mr-12 pt-2">
+                <button id="mobile-menu-close" class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                    <i data-lucide="x" class="h-6 w-6 text-white"></i>
+                </button>
+            </div>
+            <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
+                <div class="flex-shrink-0 flex items-center px-4">
+                    <div class="w-8 h-8 gradient-bg rounded-lg flex items-center justify-center">
+                        <i data-lucide="users" class="w-4 h-4 text-white"></i>
+                    </div>
+                    <span class="ml-2 text-lg font-bold gradient-text">AttendanceTracker</span>
+                </div>
+                <nav class="mt-5 px-2 space-y-1">
+                    <a href="#home" class="mobile-nav-link text-gray-900 hover:bg-gray-100 group flex items-center px-2 py-2 text-base font-medium rounded-md">Home</a>
+                    <a href="#features" class="mobile-nav-link text-gray-600 hover:bg-gray-100 group flex items-center px-2 py-2 text-base font-medium rounded-md">Features</a>
+                    <a href="#dashboard" class="mobile-nav-link text-gray-600 hover:bg-gray-100 group flex items-center px-2 py-2 text-base font-medium rounded-md">Dashboard</a>
+                    <a href="#pricing" class="mobile-nav-link text-gray-600 hover:bg-gray-100 group flex items-center px-2 py-2 text-base font-medium rounded-md">Pricing</a>
+                    <a href="#contact" class="mobile-nav-link text-gray-600 hover:bg-gray-100 group flex items-center px-2 py-2 text-base font-medium rounded-md">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="pt-16 min-h-screen flex items-center gradient-bg relative overflow-hidden">
+        <div class="absolute inset-0">
+            <div class="absolute top-20 left-20 w-64 h-64 bg-white bg-opacity-10 rounded-full blur-3xl animate-float"></div>
+            <div class="absolute bottom-20 right-20 w-80 h-80 bg-white bg-opacity-10 rounded-full blur-3xl animate-float-delay"></div>
+            <div class="absolute top-1/2 left-1/3 w-48 h-48 bg-white bg-opacity-10 rounded-full blur-2xl animate-float"></div>
+        </div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="text-center">
+                <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                    Smart Attendance
+                    <span class="block text-yellow-300">Management</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto">
+                    Transform your attendance tracking with AI-powered insights, real-time analytics, and seamless integration for modern educational institutions.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="showDemo()" class="bg-white text-blue-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transform hover:scale-105 transition-all duration-200 shadow-xl">
+                        <i data-lucide="play-circle" class="w-5 h-5 inline mr-2"></i>
+                        View Live Demo
+                    </button>
+                    <button onclick="showRegister()" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-blue-600 transition-all duration-200">
+                        Start Free Trial
+                    </button>
+                </div>
+                
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-white">10K+</div>
+                        <div class="text-blue-200">Active Users</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-white">99.9%</div>
+                        <div class="text-blue-200">Uptime</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-white">500+</div>
+                        <div class="text-blue-200">Institutions</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Powerful Features</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Everything you need to manage attendance efficiently and effectively.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover">
+                    <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-6">
+                        <i data-lucide="clock" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Real-time Tracking</h3>
+                    <p class="text-gray-600">Monitor attendance in real-time with instant notifications and automated reports.</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover">
+                    <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-6">
+                        <i data-lucide="bar-chart" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Advanced Analytics</h3>
+                    <p class="text-gray-600">Get detailed insights with comprehensive analytics and customizable reports.</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover">
+                    <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-6">
+                        <i data-lucide="smartphone" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Mobile First</h3>
+                    <p class="text-gray-600">Access from anywhere with our responsive web app and mobile applications.</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover">
+                    <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-6">
+                        <i data-lucide="shield" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Secure & Private</h3>
+                    <p class="text-gray-600">Enterprise-grade security with encrypted data and privacy compliance.</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover">
+                    <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-6">
+                        <i data-lucide="users" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Team Management</h3>
+                    <p class="text-gray-600">Manage multiple classes, teachers, and students with role-based permissions.</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover">
+                    <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mb-6">
+                        <i data-lucide="settings" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Easy Integration</h3>
+                    <p class="text-gray-600">Seamlessly integrate with existing systems via API and export capabilities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Preview -->
+    <section id="dashboard" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Intuitive Dashboard</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Get a complete overview of your attendance data with our beautifully designed dashboard.</p>
+            </div>
+            
+            <!-- Dashboard Demo -->
+            <div class="bg-gray-900 rounded-2xl p-8 shadow-2xl">
+                <div class="flex items-center justify-between mb-8">
+                    <h3 class="text-2xl font-bold text-white">Dashboard Overview</h3>
+                    <div class="flex space-x-2">
+                        <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                        <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                        <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="stat-card rounded-xl p-6 text-white">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm opacity-80">Total Students</p>
+                                <p class="text-2xl font-bold">1,247</p>
+                            </div>
+                            <i data-lucide="users" class="w-8 h-8 opacity-80"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container rounded-xl p-6 text-white">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm opacity-80">Present Today</p>
+                                <p class="text-2xl font-bold">1,089</p>
+                            </div>
+                            <i data-lucide="check-circle" class="w-8 h-8 opacity-80"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-green-400 to-blue-500 rounded-xl p-6 text-white">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm opacity-80">Attendance Rate</p>
+                                <p class="text-2xl font-bold">87.3%</p>
+                            </div>
+                            <i data-lucide="trending-up" class="w-8 h-8 opacity-80"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-purple-400 to-pink-400 rounded-xl p-6 text-white">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm opacity-80">Classes</p>
+                                <p class="text-2xl font-bold">24</p>
+                            </div>
+                            <i data-lucide="book-open" class="w-8 h-8 opacity-80"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-gray-800 rounded-xl p-6">
+                        <h4 class="text-lg font-semibold text-white mb-4">Weekly Attendance</h4>
+                        <div class="h-32 bg-gray-700 rounded-lg flex items-end justify-center p-4">
+                            <div class="flex items-end space-x-2 h-full">
+                                <div class="bg-blue-500 w-8 rounded-t" style="height: 60%"></div>
+                                <div class="bg-blue-500 w-8 rounded-t" style="height: 80%"></div>
+                                <div class="bg-blue-500 w-8 rounded-t" style="height: 45%"></div>
+                                <div class="bg-blue-500 w-8 rounded-t" style="height: 90%"></div>
+                                <div class="bg-blue-500 w-8 rounded-t" style="height: 70%"></div>
+                                <div class="bg-blue-500 w-8 rounded-t" style="height: 85%"></div>
+                                <div class="bg-blue-500 w-8 rounded-t" style="height: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-800 rounded-xl p-6">
+                        <h4 class="text-lg font-semibold text-white mb-4">Recent Activity</h4>
+                        <div class="space-y-3">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                                <span class="text-sm text-gray-300">Class 10A - Morning session completed</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                                <span class="text-sm text-gray-300">3 students marked late in Class 9B</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                <span class="text-sm text-gray-300">Weekly report generated</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-2 h-2 bg-red-500 rounded-full"></div>
+                                <span class="text-sm text-gray-300">5 students absent in Class 8C</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Choose Your Plan</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Flexible pricing options for schools and institutions of all sizes.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Basic Plan -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border-2 border-transparent">
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Basic</h3>
+                        <div class="text-4xl font-bold text-gray-900 mb-2">$29<span class="text-lg text-gray-500">/month</span></div>
+                        <p class="text-gray-600 mb-8">Perfect for small schools</p>
+                        
+                        <ul class="space-y-4 text-left mb-8">
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>
+                                <span>Up to 100 students</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>
+                                <span>Basic reporting</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>
+                                <span>Email support</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>
+                                <span>Mobile access</span>
+                            </li>
+                        </ul>
+                        
+                        <button class="w-full bg-gray-200 text-gray-800 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors">
+                            Get Started
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Pro Plan -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border-2 border-blue-500 relative transform scale-105">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                        <span class="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold">Most Popular</span>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Pro</h3>
+                        <div class="text-4xl font-bold text-gray-900 mb-2">$79<span class="text-lg text-gray-500">/month</span></div>
+                        <p class="text-gray-600 mb-8">For growing institutions</p>
+                        
+                        <ul class="space-y-4 text-left mb-8">
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>
+                                <span>Up to 500 students</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>
+                                <span>Advanced analytics</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>
+                                <span>Priority support</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>
+                                <span>API access</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>
+                                <span>Custom integrations</span>
+                            </li>
+                        </ul>
+                        
+                        <button class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                            Start Free Trial
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Enterprise Plan -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border-2 border-transparent">
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Enterprise</h3>
+                        <div class="text-4xl font-bold text-gray-900 mb-2">Custom</div>
+                        <p class="text-gray-600 mb-8">For large organizations</p>
+                        
+                        <ul class="space-y-4 text-left mb-8">
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>
+                                <span>Unlimited students</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>
+                                <span>Custom features</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>
+                                <span>24/7 support</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>
+                                <span>On-premise option</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>
+                                <span>Dedicated manager</span>
+                            </li>
+                        </ul>
+                        
+                        <button onclick="showContact()" class="w-full bg-gray-800 text-white py-3 rounded-lg font-semibold hover:bg-gray-700 transition-colors">
+                            Contact Sales
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Get In Touch</h2>
+                    <p class="text-xl text-gray-600">Ready to transform your attendance management? Let's talk!</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6">Contact Information</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mr-4">
+                                    <i data-lucide="mail" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold text-gray-900">Email</h4>
+                                    <p class="text-gray-600">hello@attendancetracker.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mr-4">
+                                    <i data-lucide="phone" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold text-gray-900">Phone</h4>
+                                    <p class="text-gray-600">+1 (555) 123-4567</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mr-4">
+                                    <i data-lucide="map-pin" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold text-gray-900">Office</h4>
+                                    <p class="text-gray-600">123 Education Street<br>Tech City, TC 12345</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h4 class="text-lg font-semibold text-gray-900 mb-4">Follow Us</h4>
+                            <div class="flex space-x-4">
+                                <a href="#" class="w-10 h-10 bg-gray-200 rounded-lg flex items-center justify-center hover:bg-gray-300 transition-colors">
+                                    <i data-lucide="twitter" class="w-5 h-5 text-gray-600"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 bg-gray-200 rounded-lg flex items-center justify-center hover:bg-gray-300 transition-colors">
+                                    <i data-lucide="linkedin" class="w-5 h-5 text-gray-600"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 bg-gray-200 rounded-lg flex items-center justify-center hover:bg-gray-300 transition-colors">
+                                    <i data-lucide="facebook" class="w-5 h-5 text-gray-600"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="bg-gray-50 rounded-2xl p-8">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-6">Send us a message</h3>
+                            <div class="space-y-6">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                                        <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                                        <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                    <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                                    <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                                    <textarea rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                                </div>
+                                
+                                <button class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                                    Send Message
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center">
+                            <i data-lucide="users" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <span class="ml-3 text-xl font-bold">AttendanceTracker Pro</span>
+                    </div>
+                    <p class="text-gray-400 mb-6 max-w-md">
+                        Empowering educational institutions with smart attendance management solutions that save time and improve accuracy.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors">
+                            <i data-lucide="facebook" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Product</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#features" class="hover:text-white transition-colors">Features</a></li>
+                        <li><a href="#pricing" class="hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="#dashboard" class="hover:text-white transition-colors">Dashboard</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">API</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Integrations</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Support</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
+                        <li><a href="#contact" class="hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Status</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Updates</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm">© 2025 AttendanceTracker Pro. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            
+            <div class="inline-block align-bottom bg-white rounded-2xl px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-8">
+                <div class="absolute top-0 right-0 pt-4 pr-4">
+                    <button onclick="closeModal('loginModal')" class="bg-white rounded-md text-gray-400 hover:text-gray-600">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+                
+                <div class="text-center mb-8">
+                    <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="users" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Welcome Back</h3>
+                    <p class="text-gray-600">Sign in to your account to continue</p>
+                </div>
+                
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i data-lucide="mail" class="w-5 h-5 text-gray-400"></i>
+                            </div>
+                            <input type="email" class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter your email">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i data-lucide="lock" class="w-5 h-5 text-gray-400"></i>
+                            </div>
+                            <input type="password" class="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter your password">
+                            <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                                <i data-lucide="eye" class="w-5 h-5 text-gray-400 hover:text-gray-600"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                            <label class="ml-2 text-sm text-gray-600">Remember me</label>
+                        </div>
+                        <button class="text-sm text-blue-600 hover:text-blue-500 font-medium">Forgot password?</button>
+                    </div>
+                    
+                    <button class="w-full gradient-bg text-white py-3 rounded-xl font-semibold hover:opacity-90 transition-opacity">
+                        Sign In
+                    </button>
+                    
+                    <div class="text-center">
+                        <p class="text-sm text-gray-600">
+                            Don't have an account?
+                            <button onclick="closeModal('loginModal'); showRegister()" class="font-medium text-blue-600 hover:text-blue-500 ml-1">Sign Up</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            
+            <div class="inline-block align-bottom bg-white rounded-2xl px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-8">
+                <div class="absolute top-0 right-0 pt-4 pr-4">
+                    <button onclick="closeModal('registerModal')" class="bg-white rounded-md text-gray-400 hover:text-gray-600">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+                
+                <div class="text-center mb-8">
+                    <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="user-plus" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Create Account</h3>
+                    <p class="text-gray-600">Start your free trial today</p>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                            <input type="text" class="w-full px-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="John">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                            <input type="text" class="w-full px-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Doe">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i data-lucide="mail" class="w-5 h-5 text-gray-400"></i>
+                            </div>
+                            <input type="email" class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="john@school.edu">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Institution Name</label>
+                        <input type="text" class="w-full px-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Your School Name">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i data-lucide="lock" class="w-5 h-5 text-gray-400"></i>
+                            </div>
+                            <input type="password" class="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Create a strong password">
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <input type="checkbox" class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500 mt-1">
+                        <label class="ml-2 text-sm text-gray-600">
+                            I agree to the <a href="#" class="text-blue-600 hover:text-blue-500">Terms of Service</a> and <a href="#" class="text-blue-600 hover:text-blue-500">Privacy Policy</a>
+                        </label>
+                    </div>
+                    
+                    <button class="w-full gradient-bg text-white py-3 rounded-xl font-semibold hover:opacity-90 transition-opacity">
+                        Create Account
+                    </button>
+                    
+                    <div class="text-center">
+                        <p class="text-sm text-gray-600">
+                            Already have an account?
+                            <button onclick="closeModal('registerModal'); showLogin()" class="font-medium text-blue-600 hover:text-blue-500 ml-1">Sign In</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Navigation functionality
+        function initNavigation() {
+            const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
+            const sections = document.querySelectorAll('section[id]');
+            
+            // Smooth scrolling
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if (targetSection) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        
+                        // Close mobile menu if open
+                        closeMobileMenu();
+                    }
+                });
+            });
+
+            // Active navigation highlighting
+            function updateActiveNav() {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (scrollY >= (sectionTop - 200)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('text-gray-900');
+                    link.classList.add('text-gray-500');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.remove('text-gray-500');
+                        link.classList.add('text-gray-900');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateActiveNav);
+            updateActiveNav();
+        }
+
+        // Mobile menu functionality
+        function initMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuClose = document.getElementById('mobile-menu-close');
+
+            mobileMenuBtn.addEventListener('click', openMobileMenu);
+            mobileMenuClose.addEventListener('click', closeMobileMenu);
+
+            // Close on backdrop click
+            mobileMenu.addEventListener('click', (e) => {
+                if (e.target === mobileMenu) {
+                    closeMobileMenu();
+                }
+            });
+        }
+
+        function openMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.remove('-translate-x-full');
+            mobileMenu.classList.add('translate-x-0');
+        }
+
+        function closeMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.remove('translate-x-0');
+            mobileMenu.classList.add('-translate-x-full');
+        }
+
+        // Modal functionality
+        function showLogin() {
+            document.getElementById('loginModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function showRegister() {
+            document.getElementById('registerModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function showDemo() {
+            // Scroll to dashboard section
+            document.getElementById('dashboard').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        function showContact() {
+            // Scroll to contact section
+            document.getElementById('contact').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        // Navbar scroll effect
+        function initNavbarScroll() {
+            const navbar = document.getElementById('navbar');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    navbar.classList.add('bg-white/95', 'backdrop-blur-sm');
+                } else {
+                    navbar.classList.remove('bg-white/95', 'backdrop-blur-sm');
+                }
+            });
+        }
+
+        // Animation on scroll
+        function initScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fade-in');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all cards and sections
+            document.querySelectorAll('.card-hover, section').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Stats counter animation
+        function initStatsAnimation() {
+            const stats = document.querySelectorAll('.text-3xl');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateValue(entry.target);
+                    }
+                });
+            });
+
+            stats.forEach(stat => {
+                if (stat.textContent.includes('K') || stat.textContent.includes('%')) {
+                    observer.observe(stat);
+                }
+            });
+        }
+
+        function animateValue(element) {
+            const text = element.textContent;
+            const hasK = text.includes('K');
+            const hasPercent = text.includes('%');
+            const numValue = parseFloat(text.replace(/[K%+]/g, ''));
+            
+            let startValue = 0;
+            const duration = 2000;
+            const increment = numValue / (duration / 16);
+            
+            function updateValue() {
+                startValue += increment;
+                if (startValue < numValue) {
+                    let displayValue = Math.floor(startValue);
+                    if (hasK) displayValue += 'K';
+                    if (hasPercent) displayValue += '%';
+                    if (text.includes('+')) displayValue += '+';
+                    element.textContent = displayValue;
+                    requestAnimationFrame(updateValue);
+                } else {
+                    element.textContent = text;
+                }
+            }
+            
+            updateValue();
+        }
+
+        // Initialize all functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            initNavigation();
+            initMobileMenu();
+            initNavbarScroll();
+            initScrollAnimations();
+            initStatsAnimation();
+            
+            // Close modals on escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeModal('loginModal');
+                    closeModal('registerModal');
+                    closeMobileMenu();
+                }
+            });
+        });
+
+        // Add fade-in animation class
+        const style = document.createElement('style');
+        style.textContent = `
+            .animate-fade-in {
+                animation: fadeIn 0.6s ease-out forwards;
+            }
+            
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

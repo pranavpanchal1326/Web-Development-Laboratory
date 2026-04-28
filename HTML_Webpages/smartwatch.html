@@ -1,0 +1,1755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minimalist Smartwatch Showcase - Premium Aesthetic Design</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+<style>
+/* Global Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #fafbfc 0%, #f1f3f4 100%);
+  color: #1a1a1a;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  letter-spacing: -0.025em;
+}
+
+h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.75rem;
+}
+
+p {
+  color: #5a6c7d;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Layout Containers */
+.container-fluid {
+  padding: 0;
+}
+
+.container-custom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.section-spacing {
+  padding: 5rem 0;
+}
+
+/* Header & Navigation */
+.main-header {
+  position: sticky;
+  top: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.navbar {
+  padding: 1rem 0;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2563eb !important;
+  text-decoration: none;
+}
+
+.nav-link {
+  font-weight: 500;
+  color: #64748b !important;
+  margin: 0 1rem;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #2563eb !important;
+}
+
+/* Hero Section */
+.hero-section {
+  text-align: center;
+  padding: 6rem 0 4rem 0;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(37,99,235,0.1)"/><circle cx="80" cy="80" r="2" fill="rgba(37,99,235,0.1)"/><circle cx="40" cy="60" r="1" fill="rgba(37,99,235,0.1)"/></svg>');
+  opacity: 0.4;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-title {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: #64748b;
+  max-width: 600px;
+  margin: 0 auto 3rem auto;
+  font-weight: 400;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  color: white;
+  padding: 1rem 2.5rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+}
+
+.hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+  color: white;
+}
+
+/* Gallery Section */
+.gallery-section {
+  padding: 5rem 0;
+  background: white;
+}
+
+.gallery-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+  padding: 3rem;
+  position: relative;
+}
+
+.gallery-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #2563eb, #3b82f6, #06b6d4);
+  border-radius: 24px 24px 0 0;
+}
+
+.gallery-container {
+  position: relative;
+  height: 500px;
+  overflow: hidden;
+  border-radius: 20px;
+  margin-bottom: 2rem;
+  background: #f8fafc;
+}
+
+.gallery-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 20px;
+}
+
+.gallery-image.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.gallery-image:not(.active) {
+  transform: scale(1.05);
+}
+
+.gallery-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.gallery-btn {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  border: none;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.gallery-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.gallery-btn:hover::before {
+  left: 100%;
+}
+
+.gallery-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  color: white;
+}
+
+.gallery-indicators {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.indicator {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #cbd5e1;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.indicator.active {
+  background: #2563eb;
+  transform: scale(1.3);
+}
+
+.indicator::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: white;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.indicator.active::after {
+  opacity: 1;
+}
+
+/* Widgets Section */
+.widgets-section {
+  padding: 6rem 0;
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+}
+
+.section-title {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 4rem;
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+  border-radius: 2px;
+}
+
+.widgets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.widget-card {
+  background: white;
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.widget-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.widget-card:hover::before {
+  transform: scaleX(1);
+}
+
+.widget-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+.widget-title {
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.widget-icon {
+  width: 24px;
+  height: 24px;
+  color: #2563eb;
+}
+
+/* Form Elements */
+.form-label {
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.75rem;
+  display: block;
+  font-size: 1rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  background: #f9fafb;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.form-control:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+  background: white;
+}
+
+.form-control::placeholder {
+  color: #9ca3af;
+}
+
+/* Button Styles */
+.btn-primary-custom {
+  width: 100%;
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  border: none;
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary-custom::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-primary-custom:hover::before {
+  left: 100%;
+}
+
+.btn-primary-custom:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+  color: white;
+}
+
+.btn-outline-secondary {
+  width: 100%;
+  background: transparent;
+  border: 2px solid #e5e7eb;
+  color: #6b7280;
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-secondary:hover {
+  border-color: #2563eb;
+  color: #2563eb;
+  background: #f8fafc;
+}
+
+/* Radio Button Styles */
+.radio-group {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.radio-item {
+  position: relative;
+}
+
+.radio-item input[type="radio"] {
+  display: none;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  background: white;
+  user-select: none;
+}
+
+.radio-item input[type="radio"]:checked + .radio-label {
+  border-color: #2563eb;
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+}
+
+.color-indicator {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.color-black { background: #1f2937; }
+.color-silver { background: #9ca3af; }
+.color-gold { background: #f59e0b; }
+
+/* Tabs Styles */
+.ui-tabs {
+  border: none;
+  background: transparent;
+}
+
+.ui-tabs .ui-tabs-nav {
+  border: none;
+  background: transparent;
+  padding: 0;
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.ui-tabs .ui-tabs-nav li {
+  border: none;
+  background: transparent;
+  margin: 0;
+}
+
+.ui-tabs .ui-tabs-nav li a {
+  padding: 1rem 2rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 50px;
+  background: white;
+  color: #6b7280;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  display: block;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-active a {
+  border-color: #2563eb;
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+  animation: activeTabGlow 2s infinite alternate;
+}
+
+@keyframes activeTabGlow {
+  0% { box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3); }
+  100% { box-shadow: 0 4px 20px rgba(37, 99, 235, 0.5); }
+}
+
+.ui-tabs .ui-tabs-panel {
+  border: none;
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 2rem;
+  margin-top: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Interactive Box */
+.interaction-section {
+  padding: 5rem 0;
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.interaction-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="20" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="20" cy="90" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+  opacity: 0.3;
+}
+
+.interaction-content {
+  position: relative;
+  z-index: 2;
+}
+
+.interaction-box {
+  width: 400px;
+  height: 250px;
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #06b6d4 100%);
+  background-size: 300% 300%;
+  animation: gradientShift 6s ease infinite;
+  border-radius: 24px;
+  color: white;
+  font-weight: 700;
+  font-size: 1.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem auto;
+  cursor: move;
+  user-select: none;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.interaction-box::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  background: linear-gradient(135deg, #2563eb, #3b82f6, #06b6d4);
+  background-size: 300% 300%;
+  animation: gradientShift 6s ease infinite;
+  border-radius: 28px;
+  z-index: -1;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.interaction-box:hover {
+  transform: scale(1.05) rotate(1deg);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+.interaction-box:active {
+  transform: scale(0.98);
+}
+
+/* Features Section */
+.features-section {
+  padding: 6rem 0;
+  background: white;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  text-align: center;
+  padding: 3rem 2rem;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  border-radius: 20px;
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(37, 99, 235, 0.2);
+}
+
+.feature-card:hover .feature-content {
+  color: white;
+  position: relative;
+  z-index: 2;
+}
+
+.feature-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+  color: #2563eb;
+  transition: color 0.4s ease;
+}
+
+.feature-card:hover .feature-icon {
+  color: white;
+}
+
+.feature-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  transition: color 0.4s ease;
+}
+
+.feature-description {
+  font-size: 1rem;
+  color: #64748b;
+  transition: color 0.4s ease;
+}
+
+.feature-card:hover .feature-description {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Specs Table */
+.specs-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  margin: 2rem 0;
+}
+
+.specs-table th,
+.specs-table td {
+  padding: 1.5rem;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.specs-table th {
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.specs-table tr:hover {
+  background: #f1f5f9;
+  cursor: pointer;
+}
+
+.clickable-spec {
+  transition: all 0.3s ease;
+}
+
+.highlight-spec {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%) !important;
+  transform: scale(1.02);
+}
+
+.progress-bar-custom {
+  height: 8px;
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+  border-radius: 4px;
+  transition: width 0.8s ease;
+  margin-top: 0.5rem;
+}
+
+/* Review Styles */
+.review-item {
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  background: #f8fafc;
+  border-radius: 12px;
+  border-left: 4px solid #2563eb;
+}
+
+.review-summary {
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  padding: 2rem;
+  border-radius: 16px;
+  color: white;
+  text-align: center;
+}
+
+/* Footer */
+.footer {
+  background: #1e293b;
+  color: white;
+  padding: 4rem 0 2rem 0;
+  text-align: center;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.footer-link {
+  color: #cbd5e1;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: #3b82f6;
+}
+
+.footer-text {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.8s ease forwards;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.slide-in-right {
+  animation: slideInRight 0.8s ease forwards;
+}
+
+/* Loading Animation */
+.loading-spinner {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .container-custom {
+    padding: 0 1.5rem;
+  }
+  
+  .widgets-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .gallery-container {
+    height: 300px;
+  }
+  
+  .widgets-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+  
+  .gallery-wrapper {
+    margin: 0 1rem;
+    padding: 2rem;
+  }
+  
+  .radio-group {
+    justify-content: center;
+  }
+  
+  .interaction-box {
+    width: 320px;
+    height: 200px;
+    font-size: 1.1rem;
+  }
+  
+  .ui-tabs .ui-tabs-nav {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .footer-links {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #1d4ed8, #2563eb);
+}
+
+/* Utility Classes */
+.text-gradient {
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.shadow-custom {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.shadow-custom-hover:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Focus States */
+.btn-primary-custom:focus,
+.form-control:focus,
+.gallery-btn:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+  .interaction-box,
+  .gallery-controls,
+  .hero-cta {
+    display: none;
+  }
+  
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .gallery-image {
+    position: static;
+    opacity: 1;
+    margin-bottom: 1rem;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="main-header">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-custom">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-clock"></i>Electra SmartWatch Pro
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#specs">Specifications</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container-custom">
+        <div class="hero-content">
+            <h1 class="hero-title fade-in-up">Electra Smartwatch Showcase</h1>
+            <p class="hero-subtitle fade-in-up">Experience the perfect harmony of cutting-edge technology and timeless design with our revolutionary smartwatch collection.</p>
+            <a href="#gallery" class="hero-cta fade-in-up">
+                <i class="fas fa-arrow-down"></i>
+                Explore Collection
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="gallery-section" id="gallery">
+    <div class="container-custom">
+        <h2 class="section-title">Product Gallery</h2>
+        <div class="gallery-wrapper">
+            <div class="gallery-container">
+                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=80" class="gallery-image active" alt="Premium Smartwatch Collection View 1" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1549924231-f129b911e442?auto=format&fit=crop&w=1000&q=80" class="gallery-image" alt="Premium Smartwatch Collection View 2" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1508898578281-774ac4893b48?auto=format&fit=crop&w=1000&q=80" class="gallery-image" alt="Premium Smartwatch Collection View 3" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1000&q=80" class="gallery-image" alt="Premium Smartwatch Collection View 4" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?auto=format&fit=crop&w=1000&q=80" class="gallery-image" alt="Premium Smartwatch Collection View 5" loading="lazy">
+            </div>
+            <div class="gallery-controls">
+                <button id="prevBtn" class="gallery-btn slide-in-left">
+                    <i class="fas fa-chevron-left"></i> Previous
+                </button>
+                <div class="gallery-indicators">
+                    <span class="indicator active" data-slide="0"></span>
+                    <span class="indicator" data-slide="1"></span>
+                    <span class="indicator" data-slide="2"></span>
+                    <span class="indicator" data-slide="3"></span>
+                    <span class="indicator" data-slide="4"></span>
+                </div>
+                <button id="nextBtn" class="gallery-btn slide-in-right">
+                    Next <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Widgets Section -->
+<section class="widgets-section">
+    <div class="container-custom">
+        <h2 class="section-title">Customize Your Experience</h2>
+        <div class="widgets-grid">
+            
+            <!-- Search Widget -->
+            <div class="widget-card fade-in-up">
+                <h3 class="widget-title">
+                    <i class="fas fa-search widget-icon"></i>
+                    Search Products
+                </h3>
+                <div class="mb-3">
+                    <label for="productSearch" class="form-label">Find Your Perfect Smartwatch</label>
+                    <input type="text" id="productSearch" class="form-control" placeholder="Type model name, feature, or specification...">
+                    <div class="mt-2">
+                        <small class="text-muted">Try searching: "Pro Max", "Fitness Edition", "Classic Series", "Sport Watch"</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions Widget -->
+            <div class="widget-card fade-in-up">
+                <h3 class="widget-title">
+                    <i class="fas fa-bolt widget-icon"></i>
+                    Quick Actions
+                </h3>
+                <div class="d-grid gap-2">
+                    <button id="shopNowBtn" class="btn-primary-custom">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                    <button class="btn-outline-secondary">
+                        <i class="fas fa-heart"></i> Save to Wishlist
+                    </button>
+                    <button class="btn-outline-secondary">
+                        <i class="fas fa-share-alt"></i> Share Product
+                    </button>
+                </div>
+            </div>
+
+            <!-- Color Selection Widget -->
+            <div class="widget-card fade-in-up">
+                <h3 class="widget-title">
+                    <i class="fas fa-palette widget-icon"></i>
+                    Strap Customization
+                </h3>
+                <div class="mb-3">
+                    <label class="form-label">Choose Your Strap Color</label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="colorBlack" name="strapColor" value="black" checked>
+                            <label for="colorBlack" class="radio-label">
+                                <span class="color-indicator color-black"></span>
+                                Midnight Black
+                            </label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="colorSilver" name="strapColor" value="silver">
+                            <label for="colorSilver" class="radio-label">
+                                <span class="color-indicator color-silver"></span>
+                                Silver Steel
+                            </label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="colorGold" name="strapColor" value="gold">
+                            <label for="colorGold" class="radio-label">
+                                <span class="color-indicator color-gold"></span>
+                                Rose Gold
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Demo Booking Widget -->
+            <div class="widget-card fade-in-up">
+                <h3 class="widget-title">
+                    <i class="fas fa-calendar-alt widget-icon"></i>
+                    Schedule Demo
+                </h3>
+                <div class="mb-3">
+                    <label for="demoDate" class="form-label">Select Demo Date</label>
+                    <input type="text" id="demoDate" class="form-control" placeholder="Choose your preferred date">
+                </div>
+                <div class="mb-3">
+                    <label for="demoTime" class="form-label">Preferred Time Slot</label>
+                    <select id="demoTime" class="form-control">
+                        <option value="">Select time...</option>
+                        <option value="10:00">10:00 AM - 11:00 AM</option>
+                        <option value="14:00">2:00 PM - 3:00 PM</option>
+                        <option value="16:00">4:00 PM - 5:00 PM</option>
+                        <option value="18:00">6:00 PM - 7:00 PM</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="demoLocation" class="form-label">Demo Location</label>
+                    <select id="demoLocation" class="form-control">
+                        <option value="">Choose location...</option>
+                        <option value="store">Visit Our Store</option>
+                        <option value="virtual">Virtual Demo</option>
+                        <option value="home">Home Visit</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Product Information Tabs -->
+            <div class="widget-card fade-in-up" style="grid-column: 1 / -1;">
+                <h3 class="widget-title">
+                    <i class="fas fa-info-circle widget-icon"></i>
+                    Detailed Product Information
+                </h3>
+                <div id="productTabs">
+                    <ul>
+                        <li><a href="#specsTab">Technical Specifications</a></li>
+                        <li><a href="#reviewsTab">Customer Reviews</a></li>
+                        <li><a href="#techTab">Advanced Technology</a></li>
+                        <li><a href="#warrantyTab">Warranty & Support</a></li>
+                    </ul>
+                    <div id="specsTab">
+                        <table class="specs-table">
+                            <thead>
+                                <tr>
+                                    <th>Component</th>
+                                    <th>Specification</th>
+                                    <th>Performance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="clickable-spec">
+                                    <td><strong>Battery Life</strong></td>
+                                    <td>Up to 48 hours</td>
+                                    <td><div class="progress-bar-custom" style="width: 96%;"></div></td>
+                                </tr>
+                                <tr class="clickable-spec">
+                                    <td><strong>Water Resistance</strong></td>
+                                    <td>50m / 5ATM</td>
+                                    <td><div class="progress-bar-custom" style="width: 94%;"></div></td>
+                                </tr>
+                                <tr class="clickable-spec">
+                                    <td><strong>Display</strong></td>
+                                    <td>OLED Retina 1.9"</td>
+                                    <td><div class="progress-bar-custom" style="width: 98%;"></div></td>
+                                </tr>
+                                <tr class="clickable-spec">
+                                    <td><strong>Connectivity</strong></td>
+                                    <td>5G, Bluetooth 5.2, WiFi 6</td>
+                                    <td><div class="progress-bar-custom" style="width: 92%;"></div></td>
+                                </tr>
+                                <tr class="clickable-spec">
+                                    <td><strong>Storage</strong></td>
+                                    <td>32GB Internal</td>
+                                    <td><div class="progress-bar-custom" style="width: 85%;"></div></td>
+                                </tr>
+                                <tr class="clickable-spec">
+                                    <td><strong>Sensors</strong></td>
+                                    <td>Heart Rate, SpO2, GPS, Accelerometer</td>
+                                    <td><div class="progress-bar-custom" style="width: 97%;"></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="reviewsTab">
+                        <div class="review-item">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <strong>Sarah Johnson</strong>
+                                    <small class="text-muted"> - Verified Purchase</small>
+                                </div>
+                                <div class="text-warning">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                    <span class="text-muted">(5.0)</span>
+                                </div>
+                            </div>
+                            <p>"Absolutely incredible smartwatch! The battery life exceeds expectations and the health tracking features are spot-on."</p>
+                            <small class="text-muted">Purchased: Rose Gold, Sport Strap • 2 weeks ago</small>
+                        </div>
+                        
+                        <div class="review-item">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <strong>Michael Chen</strong>
+                                    <small class="text-muted"> - Verified Purchase</small>
+                                </div>
+                                <div class="text-warning">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                    <span class="text-muted">(5.0)</span>
+                                </div>
+                            </div>
+                            <p>"Best smartwatch I've ever owned. The build quality is premium and it integrates seamlessly with all my devices."</p>
+                            <small class="text-muted">Purchased: Midnight Black, Leather Strap • 1 month ago</small>
+                        </div>
+                        
+                        <div class="review-summary mt-4">
+                            <div class="row text-center">
+                                <div class="col-md-3">
+                                    <h4>4.8/5</h4>
+                                    <small>Overall Rating</small>
+                                </div>
+                                <div class="col-md-3">
+                                    <h4>2,847</h4>
+                                    <small>Total Reviews</small>
+                                </div>
+                                <div class="col-md-3">
+                                    <h4>94%</h4>
+                                    <small>Recommend Rate</small>
+                                </div>
+                                <div class="col-md-3">
+                                    <h4>4.9/5</h4>
+                                    <small>Quality Rating</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="techTab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>Processor & Performance</h5>
+                                <p><strong>Chipset:</strong> Custom ARM Cortex-A78 Quad-core 1.8GHz</p>
+                                <p><strong>GPU:</strong> Mali-G57 MC2</p>
+                                <p><strong>RAM:</strong> 2GB LPDDR5</p>
+                                <p><strong>Storage:</strong> 32GB UFS 2.1</p>
+                                
+                                <h5 class="mt-4">Display Technology</h5>
+                                <p><strong>Type:</strong> AMOLED Always-On Display</p>
+                                <p><strong>Size:</strong> 1.9 inches (45mm case)</p>
+                                <p><strong>Resolution:</strong> 484 × 396 pixels (326 PPI)</p>
+                                <p><strong>Brightness:</strong> 1000 nits peak</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Operating System</h5>
+                                <p><strong>OS:</strong> WearOS 4.0 with custom UI</p>
+                                <p><strong>Updates:</strong> 5 years guaranteed OS updates</p>
+                                <p><strong>Security:</strong> Knox security platform</p>
+                                
+                                <h5 class="mt-4">Connectivity</h5>
+                                <p><strong>Cellular:</strong> 4G LTE, 5G sub-6GHz</p>
+                                <p><strong>Wi-Fi:</strong> 802.11 a/b/g/n/ac/ax (Wi-Fi 6)</p>
+                                <p><strong>Bluetooth:</strong> 5.2 with LE</p>
+                                <p><strong>GPS:</strong> Multi-band GNSS</p>
+                                <p><strong>NFC:</strong> Yes, for payments</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="warrantyTab">
+                        <div class="warranty-info">
+                            <h5>Comprehensive Warranty Coverage</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6>Standard Warranty</h6>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-check text-success"></i> 2-year international limited warranty</li>
+                                        <li><i class="fas fa-check text-success"></i> Free repairs for manufacturing defects</li>
+                                        <li><i class="fas fa-check text-success"></i> Water damage protection (up to 50m)</li>
+                                        <li><i class="fas fa-check text-success"></i> Battery replacement if capacity drops below 80%</li>
+                                        <li><i class="fas fa-check text-success"></i> Screen replacement for manufacturing defects</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>Customer Support</h6>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-check text-success"></i> 24/7 customer support hotline</li>
+                                        <li><i class="fas fa-check text-success"></i> Live chat support</li>
+                                        <li><i class="fas fa-check text-success"></i> Video call technical assistance</li>
+                                        <li><i class="fas fa-check text-success"></i> Online troubleshooting guides</li>
+                                        <li><i class="fas fa-check text-success"></i> Authorized service centers worldwide</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="warranty-contact mt-4 p-3 bg-light rounded">
+                                <h6>Need Help?</h6>
+                                <p><strong>Phone:</strong> 1-800-SMARTWATCH (1-800-762-7892)</p>
+                                <p><strong>Email:</strong> support@smartwatchpro.com</p>
+                                <p><strong>Live Chat:</strong> Available 24/7 on our website</p>
+                                <p><strong>Service Centers:</strong> Find locations at smartwatchpro.com/service</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Interactive Draggable Section -->
+<section class="interaction-section">
+    <div class="container-custom">
+        <div class="interaction-content">
+            <h2 class="section-title text-white">Interactive Experience Zone</h2>
+            <p class="text-center mb-4 text-light">Explore our innovative interface by dragging and resizing the interactive element below</p>
+            <div id="interactiveBox" class="interaction-box">
+                <div class="text-center">
+                    <i class="fas fa-hand-rock fa-2x mb-2"></i><br>
+                    <strong>Drag & Resize Me!</strong><br>
+                    <small>Discover the flexibility of our UI</small>
+                </div>
+            </div>
+            <p class="text-center mt-4 text-light">
+                <small>This interactive element demonstrates the responsive and flexible nature of our smartwatch interface design.</small>
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section" id="features">
+    <div class="container-custom">
+        <h2 class="section-title">Why Choose Our Smartwatch?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-content">
+                    <i class="fas fa-battery-full feature-icon"></i>
+                    <h3 class="feature-title">Extended Battery Life</h3>
+                    <p class="feature-description">Enjoy up to 48 hours of continuous use with our advanced power management system and rapid charging technology.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-content">
+                    <i class="fas fa-shield-alt feature-icon"></i>
+                    <h3 class="feature-title">Military-Grade Durability</h3>
+                    <p class="feature-description">Built to withstand extreme conditions with water resistance up to 50 meters and shock-resistant construction.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-content">
+                    <i class="fas fa-heartbeat feature-icon"></i>
+                    <h3 class="feature-title">Advanced Health Monitoring</h3>
+                    <p class="feature-description">24/7 comprehensive health tracking including heart rate, blood oxygen, sleep patterns, and stress levels with AI-powered insights.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-content">
+                    <i class="fas fa-wifi feature-icon"></i>
+                    <h3 class="feature-title">5G Connectivity</h3>
+                    <p class="feature-description">Stay connected anywhere with ultra-fast 5G connectivity and seamless device synchronization.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-links">
+            <a href="#" class="footer-link">Privacy Policy</a>
+            <a href="#" class="footer-link">Terms of Service</a>
+            <a href="#" class="footer-link">Support</a>
+            <a href="#" class="footer-link">Contact Us</a>
+            <a href="#" class="footer-link">About</a>
+            <a href="#" class="footer-link">Careers</a>
+        </div>
+        <p class="footer-text">&copy; 2025 SmartWatch Pro. All rights reserved. | Designed with ❤️ for the future of wearable technology.</p>
+    </div>
+</footer>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    // Gallery Functionality
+    let currentSlide = 0;
+    const slides = $('.gallery-image');
+    const indicators = $('.indicator');
+    const totalSlides = slides.length;
+    
+    function showSlide(index) {
+        slides.removeClass('active');
+        indicators.removeClass('active');
+        
+        slides.eq(index).addClass('active');
+        indicators.eq(index).addClass('active');
+    }
+    
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        showSlide(currentSlide);
+    }
+    
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        showSlide(currentSlide);
+    }
+    
+    // Gallery Controls
+    $('#nextBtn').click(nextSlide);
+    $('#prevBtn').click(prevSlide);
+    
+    // Indicator clicks
+    indicators.click(function() {
+        currentSlide = $(this).data('slide');
+        showSlide(currentSlide);
+    });
+    
+    // Auto-play gallery
+    setInterval(nextSlide, 5000);
+    
+    // Autocomplete for product search
+    const productModels = [
+        "SmartWatch Pro Max",
+        "SmartWatch Pro Classic",
+        "SmartWatch Pro Sport",
+        "SmartWatch Pro Elite",
+        "SmartWatch Pro Luxury",
+        "SmartWatch Pro Fitness",
+        "SmartWatch Pro Business",
+        "SmartWatch Pro Adventure"
+    ];
+    
+    $('#productSearch').autocomplete({
+        source: productModels,
+        minLength: 2,
+        select: function(event, ui) {
+            console.log("Selected: " + ui.item.value);
+        }
+    });
+    
+    // Button interactions
+    $('#shopNowBtn').button().click(function() {
+        const selectedColor = $('input[name="strapColor"]:checked').val();
+        const loadingSpinner = '<span class="loading-spinner"></span> Processing...';
+        
+        $(this).html(loadingSpinner).prop('disabled', true);
+        
+        setTimeout(() => {
+            alert(`Adding ${selectedColor} SmartWatch Pro to cart...`);
+            $(this).html('<i class="fas fa-shopping-cart"></i> Add to Cart').prop('disabled', false);
+        }, 2000);
+    });
+    
+    // Radio button styling (using jQuery UI)
+    $('input[type="radio"]').checkboxradio();
+    
+    // Datepicker with restrictions
+    $('#demoDate').datepicker({
+        minDate: 0,
+        maxDate: "+3M",
+        dateFormat: "dd/mm/yy",
+        showAnim: "slideDown",
+        onSelect: function(dateText) {
+            console.log("Demo scheduled for: " + dateText);
+        }
+    });
+    
+    // Tabs initialization
+    $('#productTabs').tabs({
+        activate: function(event, ui) {
+            ui.newPanel.hide().fadeIn(300);
+        }
+    });
+    
+    // Color animation effects on various elements
+    $('.btn-primary-custom').hover(
+        function() {
+            $(this).animate({
+                backgroundColor: '#1d4ed8'
+            }, 300);
+        },
+        function() {
+            $(this).animate({
+                backgroundColor: '#2563eb'
+            }, 300);
+        }
+    );
+    
+    // Show/Hide effects for spec details
+    $('.clickable-spec').click(function() {
+        const details = $(this).find('.spec-details');
+        if (details.length === 0) {
+            $(this).append('<div class="spec-details mt-2"><small class="text-muted">Click to see detailed information about this specification.</small></div>');
+            $(this).find('.spec-details').hide().slideDown(300);
+        } else {
+            details.slideUp(300, function() {
+                $(this).remove();
+            });
+        }
+    });
+    
+    // Toggle Class for highlighting specifications
+    $('.clickable-spec').click(function() {
+        $(this).toggleClass('highlight-spec');
+    });
+    
+    // Draggable and Resizable interactive box
+    $('#interactiveBox').draggable({
+        containment: '.interaction-section',
+        cursor: 'move',
+        opacity: 0.8,
+        revert: 'invalid',
+        start: function() {
+            $(this).css('transform', 'scale(1.1)');
+        },
+        stop: function() {
+            $(this).css('transform', 'scale(1)');
+        }
+    }).resizable({
+        minWidth: 200,
+        minHeight: 100,
+        maxWidth: 500,
+        maxHeight: 300,
+        handles: 'all',
+        resize: function() {
+            const width = $(this).width();
+            const height = $(this).height();
+            
+            if (width > 400 || height > 200) {
+                $(this).find('div').html(`
+                    <i class="fas fa-expand-arrows-alt fa-2x mb-2"></i><br>
+                    Expanded View!<br>
+                    <small>${width}x${height}px</small>
+                `);
+            } else {
+                $(this).find('div').html(`
+                    <i class="fas fa-hand-rock fa-2x mb-2"></i><br>
+                    <strong>Drag & Resize Me!</strong><br>
+                    <small>Discover the flexibility of our UI</small>
+                `);
+            }
+        }
+    });
+    
+    // Smooth scrolling for navigation links
+    $('a[href^="#"]').click(function(e) {
+        e.preventDefault();
+        const target = $($(this).attr('href'));
+        if (target.length) {
+            $('html, body').animate({
+                scrollTop: target.offset().top - 100
+            }, 800);
+        }
+    });
+    
+    // Header background change on scroll
+    $(window).scroll(function() {
+        const scroll = $(window).scrollTop();
+        if (scroll >= 100) {
+            $('.main-header').addClass('scrolled');
+        } else {
+            $('.main-header').removeClass('scrolled');
+        }
+    });
+    
+    // Progressive enhancement for animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in-up');
+            }
+        });
+    }, observerOptions);
+    
+    // Observe elements for animations
+    $('.widget-card, .feature-card').each(function() {
+        observer.observe(this);
+    });
+    
+    // Dynamic content loading simulation
+    $('#productSearch').on('input', function() {
+        const query = $(this).val();
+        if (query.length > 2) {
+            console.log('Searching for:', query);
+        }
+    });
+    
+    // Form validation
+    $('#demoDate, #demoTime').change(function() {
+        const date = $('#demoDate').val();
+        const time = $('#demoTime').val();
+        
+        if (date && time) {
+            $('.demo-confirmation').remove();
+            $('.widget-card:has(#demoDate)').append(
+                '<div class="demo-confirmation mt-2 p-2 bg-success text-white rounded">' +
+                '<i class="fas fa-check"></i> Demo scheduled for ' + date + ' at ' + time +
+                '</div>'
+            );
+        }
+    });
+    
+    // Color selection feedback
+    $('input[name="strapColor"]').change(function() {
+        const selectedColor = $(this).val();
+        const colorName = selectedColor.charAt(0).toUpperCase() + selectedColor.slice(1);
+        
+        $('.color-feedback').remove();
+        $(this).closest('.widget-card').append(
+            '<div class="color-feedback mt-2 p-2 bg-info text-white rounded">' +
+            '<i class="fas fa-palette"></i> ' + colorName + ' strap selected' +
+            '</div>'
+        );
+        
+        // Update gallery images based on color selection
+        $('.gallery-image').each(function(index) {
+            const newSrc = $(this).attr('src').replace(/667eea|764ba2|ff6b6b|4ecdc4/, 
+                selectedColor === 'black' ? '333333' :
+                selectedColor === 'silver' ? '9ca3af' : 'fbbf24'
+            );
+            $(this).attr('src', newSrc);
+        });
+    });
+    
+    // Advanced interaction tracking
+    let interactionCount = 0;
+    $('.widget-card, .gallery-btn, .feature-card').click(function() {
+        interactionCount++;
+        if (interactionCount % 5 === 0) {
+            console.log('User engagement level: High (' + interactionCount + ' interactions)');
+        }
+    });
+    
+    // Error handling for missing elements
+    try {
+        if ($('#productTabs').length) $('#productTabs').tabs();
+        if ($('#productSearch').length) $('#productSearch').autocomplete({source: productModels});
+        if ($('#demoDate').length) $('#demoDate').datepicker({minDate: 0});
+        if ($('#interactiveBox').length) {
+            $('#interactiveBox').draggable().resizable();
+        }
+    } catch (error) {
+        console.log('Some components failed to initialize:', error);
+    }
+    
+    // Performance monitoring
+    window.addEventListener('load', function() {
+        const loadTime = performance.now();
+        console.log('Page loaded in', Math.round(loadTime), 'milliseconds');
+    });
+    
+    // Accessibility improvements
+    $('.gallery-btn, .btn-primary-custom').keydown(function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            $(this).click();
+        }
+    });
+    
+    // Touch device optimizations
+    if ('ontouchstart' in window) {
+        $('.interaction-box').css('cursor', 'grab');
+        $('.gallery-image').on('touchstart', function(e) {
+            e.preventDefault();
+        });
+    }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1792 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NewsPulse - Your trusted source for breaking news, tech updates, and world events">
+  <meta name="keywords" content="news, breaking news, technology, world events, politics">
+  <title>NewsPulse - Your Trusted News Source</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #ec4899;
+      --accent: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --dark: #0f172a;
+      --dark-light: #1e293b;
+      --gray: #64748b;
+      --gray-light: #94a3b8;
+      --white: #ffffff;
+      --glass: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      --gradient-accent: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+      --gradient-dark: linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 100%);
+      --border-radius: 12px;
+      --border-radius-lg: 20px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--gradient-dark);
+      color: var(--white);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Scrollbar Styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--dark);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--gradient-primary);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-dark);
+    }
+
+    /* Animated Background */
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: var(--gradient-dark);
+    }
+
+    .animated-bg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(99 102 241 / 0.05)'%3e%3cpath d='m0 .5 32 32M32 .5 0 32'/%3e%3c/svg%3e") repeat;
+      animation: grid-move 20s linear infinite;
+    }
+
+    @keyframes grid-move {
+      0% {
+        transform: translate(0, 0);
+      }
+
+      100% {
+        transform: translate(32px, 32px);
+      }
+    }
+
+    /* Floating Particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      opacity: 0;
+      animation: float 15s infinite linear;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      90% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-100px) scale(1);
+        opacity: 0;
+      }
+    }
+
+    /* Navigation */
+    .navbar {
+      background: rgba(15, 23, 42, 0.8) !important;
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      transition: var(--transition);
+      padding: 1rem 0;
+    }
+
+    .navbar.scrolled {
+      background: rgba(15, 23, 42, 0.95) !important;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .navbar-brand {
+      font-weight: 800;
+      font-size: 1.75rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-brand i {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-link {
+      color: var(--gray-light) !important;
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+      padding: 0.75rem 1rem !important;
+      border-radius: var(--border-radius);
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--white) !important;
+      background: var(--glass);
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-primary);
+      transition: var(--transition);
+      transform: translateX(-50%);
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 80%;
+    }
+
+    /* Buttons */
+    .btn {
+      font-weight: 600;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+      padding: 0.75rem 1.5rem;
+      border: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      background: var(--gradient-primary);
+      color: var(--white);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-outline-primary {
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      background: transparent;
+    }
+
+    .btn-outline-primary:hover {
+      background: var(--primary);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: var(--transition-slow);
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 2rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero .lead {
+      font-size: 1.5rem;
+      color: var(--gray-light);
+      margin-bottom: 3rem;
+      max-width: 600px;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      transition: var(--transition);
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--primary);
+    }
+
+    .card-img-top {
+      height: 250px;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .card:hover .card-img-top {
+      transform: scale(1.05);
+    }
+
+    .card-body {
+      padding: 2rem;
+    }
+
+    .card-title {
+      font-weight: 700;
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      color: var(--white);
+    }
+
+    .card-text {
+      color: var(--gray-light);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .card-category {
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Section Headers */
+    .section-title {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 4rem;
+      position: relative;
+    }
+
+    .section-title span {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      width: 100px;
+      height: 4px;
+      background: var(--gradient-primary);
+      border-radius: 2px;
+      transform: translateX(-50%);
+    }
+
+    /* Carousel */
+    .carousel {
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+      margin-bottom: 4rem;
+    }
+
+    .carousel-item img {
+      height: 60vh;
+      object-fit: cover;
+      filter: brightness(0.7);
+    }
+
+    .carousel-caption {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      border: 1px solid var(--glass-border);
+      bottom: 2rem;
+      left: 2rem;
+      right: 2rem;
+      text-align: left;
+    }
+
+    .carousel-caption h5 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    /* Accordion */
+    .accordion {
+      --bs-accordion-bg: transparent;
+      --bs-accordion-border-color: var(--glass-border);
+      --bs-accordion-btn-bg: var(--glass);
+      --bs-accordion-btn-color: var(--white);
+      --bs-accordion-active-bg: var(--primary);
+      --bs-accordion-active-color: var(--white);
+    }
+
+    .accordion-item {
+      border-radius: var(--border-radius) !important;
+      margin-bottom: 1rem;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+    }
+
+    .accordion-button {
+      font-weight: 600;
+      padding: 1.5rem;
+      border-radius: var(--border-radius) !important;
+    }
+
+    .accordion-button:not(.collapsed) {
+      background: var(--gradient-primary);
+      color: var(--white);
+    }
+
+    .accordion-body {
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Progress Bar */
+    .progress {
+      height: 8px;
+      border-radius: 4px;
+      background: var(--dark-light);
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      background: var(--gradient-accent);
+      border-radius: 4px;
+      transition: var(--transition);
+      animation: progress-pulse 2s infinite;
+    }
+
+    @keyframes progress-pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.8;
+      }
+    }
+
+    /* Badges */
+    .badge {
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.875rem;
+    }
+
+    .badge-primary {
+      background: var(--gradient-primary);
+      color: var(--white);
+    }
+
+    .badge-hot {
+      background: var(--gradient-accent);
+      color: var(--white);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+    /* Alerts */
+    .alert {
+      border: none;
+      border-radius: var(--border-radius);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+    }
+
+    .alert-warning {
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--warning);
+      border-color: rgba(245, 158, 11, 0.2);
+    }
+
+    /* Modal */
+    .modal-content {
+      background: var(--dark-light);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      backdrop-filter: blur(20px);
+    }
+
+    .modal-header {
+      border-bottom: 1px solid var(--glass-border);
+      background: var(--gradient-primary);
+    }
+
+    .modal-footer {
+      border-top: 1px solid var(--glass-border);
+    }
+
+    /* Offcanvas */
+    .offcanvas {
+      background: var(--dark-light);
+      backdrop-filter: blur(20px);
+    }
+
+    .offcanvas-header {
+      background: var(--gradient-primary);
+    }
+
+    /* Toast */
+    .toast {
+      background: var(--dark-light);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      backdrop-filter: blur(20px);
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border-radius: 50px;
+      padding: 1rem 2rem;
+      border: 1px solid var(--glass-border);
+    }
+
+    .breadcrumb-item a {
+      color: var(--gray-light);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .breadcrumb-item a:hover {
+      color: var(--white);
+    }
+
+    .breadcrumb-item.active {
+      color: var(--primary);
+    }
+
+    /* Spinner */
+    .spinner-border {
+      color: var(--primary);
+      width: 3rem;
+      height: 3rem;
+    }
+
+    /* Placeholder Animation */
+    .placeholder-glow .placeholder {
+      background: linear-gradient(90deg, var(--glass) 25%, rgba(255, 255, 255, 0.2) 50%, var(--glass) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -200% 0;
+      }
+
+      100% {
+        background-position: 200% 0;
+      }
+    }
+
+    /* Scroll to Top */
+    .scroll-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 60px;
+      height: 60px;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      text-decoration: none;
+      box-shadow: var(--shadow-lg);
+      transition: var(--transition);
+      opacity: 0;
+      visibility: hidden;
+      z-index: 1000;
+    }
+
+    .scroll-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .scroll-top:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-xl);
+      color: var(--white);
+    }
+
+    /* Stats Section */
+    .stats {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      padding: 3rem;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 800;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      color: var(--gray-light);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.875rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 3rem;
+      }
+
+      .hero .lead {
+        font-size: 1.25rem;
+      }
+
+      .carousel-caption {
+        bottom: 1rem;
+        left: 1rem;
+        right: 1rem;
+        padding: 1.5rem;
+      }
+
+      .carousel-caption h5 {
+        font-size: 1.5rem;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+      }
+
+      .card-body {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .hero {
+        min-height: 80vh;
+      }
+
+      .carousel-item img {
+        height: 40vh;
+      }
+
+      .scroll-top {
+        bottom: 1rem;
+        right: 1rem;
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    /* Loading Animation */
+    .loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+
+    .loading.fade-out {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loading-spinner {
+      width: 60px;
+      height: 60px;
+      border: 4px solid var(--dark-light);
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* News Grid */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    /* Feature Card */
+    .feature-card {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+      padding: 2rem;
+      text-align: center;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient-primary);
+      opacity: 0;
+      transition: var(--transition);
+      z-index: -1;
+    }
+
+    .feature-card:hover::before {
+      opacity: 0.1;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--primary);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="loading" id="loading">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <div class="animated-bg"></div>
+
+  <div class="particles" id="particles"></div>
+
+  <nav class="navbar navbar-expand-lg fixed-top" id="navbar">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <i class="fas fa-bolt me-2"></i>NewsPulse
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="#hero">
+              <i class="fas fa-home me-2"></i>Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#top-stories">
+              <i class="fas fa-fire me-2"></i>Top Stories
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#tech">
+              <i class="fas fa-microchip me-2"></i>Tech
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#world">
+              <i class="fas fa-globe me-2"></i>World
+            </a>
+          </li>
+        </ul>
+        <div class="d-flex">
+          <button class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#searchModal">
+            <i class="fas fa-search"></i>
+          </button>
+          <button class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu">
+            <i class="fas fa-bars me-2"></i>Menu
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 hero-content">
+          <h1>Stay <span>Informed</span>, Stay <span>Ahead</span></h1>
+          <p class="lead">
+            Experience news like never before with our cutting-edge platform delivering real-time updates,
+            in-depth analysis, and breaking stories from around the globe.
+          </p>
+          <div class="d-flex flex-wrap gap-3">
+            <a href="#top-stories" class="btn btn-primary btn-lg">
+              <i class="fas fa-newspaper me-2"></i>Explore Stories
+            </a>
+            <button class="btn btn-outline-primary btn-lg" data-bs-toggle="modal" data-bs-target="#subscribeModal">
+              <i class="fas fa-bell me-2"></i>Subscribe
+            </button>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="stats">
+            <div class="row g-4">
+              <div class="col-6">
+                <div class="stat-number" data-count="50000">0</div>
+                <div class="stat-label">Daily Readers</div>
+              </div>
+              <div class="col-6">
+                <div class="stat-number" data-count="1200">0</div>
+                <div class="stat-label">Stories Published</div>
+              </div>
+              <div class="col-6">
+                <div class="stat-number" data-count="24">0</div>
+                <div class="stat-label">Countries Covered</div>
+              </div>
+              <div class="col-6">
+                <div class="stat-number" data-count="99">0</div>
+                <div class="stat-label">Accuracy Rate</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container my-5">
+    <div id="featuredCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="2"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="https://source.unsplash.com/1200x600/?politics,government,news" class="d-block w-100" alt="Political News">
+          <div class="carousel-caption">
+            <div class="card-category">Politics</div>
+            <h5>Global Political Landscape Shifts</h5>
+            <p>Major diplomatic breakthroughs reshape international relations as world leaders convene for historic summit.</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="https://source.unsplash.com/1200x600/?technology,artificial-intelligence,future" class="d-block w-100" alt="Tech News">
+          <div class="carousel-caption">
+            <div class="card-category">Technology</div>
+            <h5>AI Revolution Accelerates</h5>
+            <p>Breakthrough in artificial intelligence promises to transform industries and reshape the future of work.</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="https://source.unsplash.com/1200x600/?climate,environment,earth" class="d-block w-100" alt="Environment News">
+          <div class="carousel-caption">
+            <div class="card-category">Environment</div>
+            <h5>Climate Action Accelerates</h5>
+            <p>Innovative green technologies and global cooperation drive unprecedented progress in climate solutions.</p>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#featuredCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#featuredCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+  </section>
+
+  <section class="container my-5" id="top-stories">
+    <h2 class="section-title">
+      <span>Top Stories</span>
+      <span class="badge badge-hot ms-3">
+        <i class="fas fa-fire me-1"></i>Hot
+      </span>
+    </h2>
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="card">
+          <img src="https://source.unsplash.com/400x250/?election,voting,democracy" class="card-img-top" alt="Elections 2025">
+          <div class="card-body">
+            <div class="card-category">
+              <i class="fas fa-vote-yea me-2"></i>Politics
+            </div>
+            <h5 class="card-title">Elections 2025: The Battle for Tomorrow</h5>
+            <p class="card-text">
+              Historic election campaigns reach fever pitch as candidates present radically different visions
+              for the future. Voter turnout expected to break records.
+            </p>
+            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#newsModal" data-article="election">
+              <i class="fas fa-arrow-right me-2"></i>Read Full Story
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="card">
+          <img src="https://source.unsplash.com/400x250/?stock-market,trading,finance" class="card-img-top" alt="Stock Market">
+          <div class="card-body">
+            <div class="card-category">
+              <i class="fas fa-chart-line me-2"></i>Finance
+            </div>
+            <h5 class="card-title">Tech Stocks Soar to New Heights</h5>
+            <p class="card-text">
+              Technology sector leads unprecedented market rally as innovation investments pay dividends.
+              AI companies see explosive growth.
+            </p>
+            <div class="progress mb-3">
+              <div class="progress-bar" style="width: 85%;" data-percentage="85">85% Growth</div>
+            </div>
+            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#newsModal" data-article="stocks">
+              <i class="fas fa-arrow-right me-2"></i>Read Full Story
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="card">
+          <img src="https://source.unsplash.com/400x250/?renewable-energy,solar,wind" class="card-img-top" alt="Climate Solutions">
+          <div class="card-body">
+            <div class="card-category">
+              <i class="fas fa-leaf me-2"></i>Environment
+            </div>
+            <h5 class="card-title">Renewable Energy Breakthrough</h5>
+            <p class="card-text">
+              Revolutionary solar technology achieves 50% efficiency milestone, promising to accelerate
+              global transition to clean energy.
+            </p>
+            <button type="button" class="btn btn-primary w-100" data-bs-toggle="popover" data-bs-placement="top" data-bs-trigger="hover" title="Quick Fact" data-bs-content="Renewable energy now accounts for 30% of global electricity generation" data-bs-html="true">
+              <i class="fas fa-info-circle me-2"></i>Learn More
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="card">
+          <img src="https://source.unsplash.com/400x250/?space,mars,rocket" class="card-img-top" alt="Space Exploration">
+          <div class="card-body">
+            <div class="card-category">
+              <i class="fas fa-rocket me-2"></i>Space
+            </div>
+            <h5 class="card-title">Mars Mission Reaches Milestone</h5>
+            <p class="card-text">
+              International space collaboration achieves major breakthrough in Mars exploration technology,
+              bringing human missions closer to reality.
+            </p>
+            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#newsModal" data-article="mars">
+              <i class="fas fa-arrow-right me-2"></i>Read Full Story
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="card">
+          <img src="https://source.unsplash.com/400x250/?medicine,healthcare,research" class="card-img-top" alt="Medical Breakthrough">
+          <div class="card-body">
+            <div class="card-category">
+              <i class="fas fa-heartbeat me-2"></i>Health
+            </div>
+            <h5 class="card-title">Gene Therapy Success</h5>
+            <p class="card-text">
+              Groundbreaking gene therapy treatment shows 95% success rate in clinical trials,
+              offering hope for previously incurable diseases.
+            </p>
+            <div class="progress mb-3">
+              <div class="progress-bar" style="width: 95%;" data-percentage="95">95% Success Rate</div>
+            </div>
+            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#newsModal" data-article="gene-therapy">
+              <i class="fas fa-arrow-right me-2"></i>Read Full Story
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="card">
+          <img src="https://source.unsplash.com/400x250/?cryptocurrency,blockchain,digital" class="card-img-top" alt="Crypto News">
+          <div class="card-body">
+            <div class="card-category">
+              <i class="fas fa-coins me-2"></i>Crypto
+            </div>
+            <h5 class="card-title">Digital Currency Evolution</h5>
+            <p class="card-text">
+              Central banks worldwide accelerate digital currency adoption as blockchain technology
+              revolutionizes financial systems globally.
+            </p>
+            <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#newsModal" data-article="crypto">
+              <i class="fas fa-arrow-right me-2"></i>Read Full Story
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container my-5" id="tech">
+    <h2 class="section-title">
+      <span><i class="fas fa-microchip me-3"></i>Technology & Innovation</span>
+    </h2>
+    <div class="accordion" id="techAccordion">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAI">
+            <i class="fas fa-brain me-3"></i>Artificial Intelligence Revolution
+          </button>
+        </h2>
+        <div id="collapseAI" class="accordion-collapse collapse show" data-bs-parent="#techAccordion">
+          <div class="accordion-body">
+            <div class="row align-items-center">
+              <div class="col-md-8">
+                <p>
+                  Artificial Intelligence is transforming every aspect of human life, from healthcare diagnostics
+                  to autonomous vehicles. Recent breakthroughs in machine learning and neural networks have
+                  enabled AI systems to achieve human-level performance in complex tasks.
+                </p>
+                <ul class="list-unstyled">
+                  <li><i class="fas fa-check-circle text-success me-2"></i>Advanced natural language processing</li>
+                  <li><i class="fas fa-check-circle text-success me-2"></i>Computer vision breakthroughs</li>
+                  <li><i class="fas fa-check-circle text-success me-2"></i>Autonomous decision-making systems</li>
+                </ul>
+              </div>
+              <div class="col-md-4 text-center">
+                <div class="feature-icon">
+                  <i class="fas fa-robot"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseQuantum">
+            <i class="fas fa-atom me-3"></i>Quantum Computing Advances
+          </button>
+        </h2>
+        <div id="collapseQuantum" class="accordion-collapse collapse" data-bs-parent="#techAccordion">
+          <div class="accordion-body">
+            <div class="row align-items-center">
+              <div class="col-md-8">
+                <p>
+                  Quantum computing represents the next frontier in computational power, promising to solve
+                  complex problems that are impossible for classical computers. Recent achievements in quantum
+                  supremacy demonstrate the technology's potential to revolutionize cryptography, drug discovery,
+                  and financial modeling.
+                </p>
+                <div class="progress mb-3">
+                  <div class="progress-bar" style="width: 60%;">60% Development Progress</div>
+                </div>
+              </div>
+              <div class="col-md-4 text-center">
+                <div class="feature-icon">
+                  <i class="fas fa-atom"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWeb3">
+            <i class="fas fa-cube me-3"></i>Web3 and Blockchain Innovation
+          </button>
+        </h2>
+        <div id="collapseWeb3" class="accordion-collapse collapse" data-bs-parent="#techAccordion">
+          <div class="accordion-body">
+            <div class="row align-items-center">
+              <div class="col-md-8">
+                <p>
+                  Web3 technologies are creating a decentralized internet where users control their data and
+                  digital assets. Blockchain networks enable trustless transactions, smart contracts, and
+                  decentralized applications that operate without central authorities.
+                </p>
+                <div class="row g-3">
+                  <div class="col-sm-4 text-center">
+                    <div class="feature-card">
+                      <i class="fas fa-shield-alt feature-icon"></i>
+                      <h6>Security</h6>
+                    </div>
+                  </div>
+                  <div class="col-sm-4 text-center">
+                    <div class="feature-card">
+                      <i class="fas fa-users feature-icon"></i>
+                      <h6>Decentralization</h6>
+                    </div>
+                  </div>
+                  <div class="col-sm-4 text-center">
+                    <div class="feature-card">
+                      <i class="fas fa-coins feature-icon"></i>
+                      <h6>Digital Assets</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 text-center">
+                <div class="feature-icon">
+                  <i class="fas fa-cube"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container my-5" id="world">
+    <h2 class="section-title">
+      <span><i class="fas fa-globe me-3"></i>World News</span>
+    </h2>
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <img src="https://source.unsplash.com/600x300/?international,diplomacy,summit" class="card-img-top" alt="International Summit">
+          <div class="card-body">
+            <div class="card-category">
+              <i class="fas fa-handshake me-2"></i>Diplomacy
+            </div>
+            <h5 class="card-title">Global Climate Summit 2025</h5>
+            <p class="card-text">
+              World leaders gather for the most ambitious climate summit in history, with binding commitments
+              expected to reshape global environmental policy for decades to come.
+            </p>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newsModal" data-article="climate-summit">
+              <i class="fas fa-external-link-alt me-2"></i>Full Coverage
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="row g-3">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="card-category">
+                  <i class="fas fa-chart-bar me-2"></i>Economy
+                </div>
+                <h6 class="card-title">Global Economy Shows Resilience</h6>
+                <p class="card-text small">
+                  International markets demonstrate strong recovery as trade partnerships strengthen worldwide.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="card-category">
+                  <i class="fas fa-graduation-cap me-2"></i>Education
+                </div>
+                <h6 class="card-title">Digital Education Initiative</h6>
+                <p class="card-text small">
+                  UNESCO launches global digital literacy program reaching 100 million students across 50 countries.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="card-category">
+                  <i class="fas fa-shipping-fast me-2"></i>Trade
+                </div>
+                <h6 class="card-title">Supply Chain Innovation</h6>
+                <p class="card-text small">
+                  Revolutionary logistics technology reduces global shipping times by 40%, transforming international commerce.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container my-5">
+    <h2 class="section-title">
+      <span><i class="fas fa-rocket me-3"></i>Coming Soon</span>
+    </h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="feature-card">
+          <i class="fas fa-podcast feature-icon"></i>
+          <h5>News Podcasts</h5>
+          <p class="text-muted">Listen to our expert analysis and breaking news updates on the go.</p>
+          <div class="placeholder-glow">
+            <span class="placeholder col-8 mb-2"></span>
+            <span class="placeholder col-6"></span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card">
+          <i class="fas fa-video feature-icon"></i>
+          <h5>Live Streaming</h5>
+          <p class="text-muted">Watch live coverage of major events as they unfold around the world.</p>
+          <div class="placeholder-glow">
+            <span class="placeholder col-9 mb-2"></span>
+            <span class="placeholder col-7"></span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card">
+          <i class="fas fa-mobile-alt feature-icon"></i>
+          <h5>Mobile App</h5>
+          <p class="text-muted">Get instant notifications and personalized news feed on your smartphone.</p>
+          <div class="placeholder-glow">
+            <span class="placeholder col-7 mb-2"></span>
+            <span class="placeholder col-8"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <div class="d-flex align-items-center">
+        <i class="fas fa-exclamation-triangle me-3 fs-4"></i>
+        <div>
+          <strong>Breaking News:</strong> Major cybersecurity breach affects global financial institutions.
+          <a href="#" class="alert-link">Read full report</a>
+        </div>
+      </div>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  </div>
+
+  <nav class="container my-4" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="#hero"><i class="fas fa-home me-2"></i>Home</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a href="#top-stories"><i class="fas fa-newspaper me-2"></i>News</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">Current Stories</li>
+    </ol>
+  </nav>
+
+  <div class="container text-center my-5">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading more content...</span>
+    </div>
+    <p class="mt-3 text-muted">Fetching the latest updates...</p>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div class="toast align-items-center text-white bg-success border-0" id="welcomeToast" role="alert">
+      <div class="d-flex">
+        <div class="toast-body">
+          <i class="fas fa-check-circle me-2"></i>
+          Welcome to NewsPulse! Stay updated with breaking news.
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    </div>
+  </div>
+
+  <a href="#hero" class="scroll-top" id="scrollTop">
+    <i class="fas fa-chevron-up"></i>
+  </a>
+
+  <div class="modal fade" id="newsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="fas fa-newspaper me-2"></i>
+            <span id="modalTitle">Full Story</span>
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" id="modalBody">
+          <div class="text-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Loading article content...</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">
+            <i class="fas fa-times me-2"></i>Close
+          </button>
+          <button type="button" class="btn btn-primary">
+            <i class="fas fa-share-alt me-2"></i>Share Article
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="searchModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="fas fa-search me-2"></i>Search News
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <input type="search" class="form-control form-control-lg" placeholder="Search for news, topics, or keywords..." id="searchInput">
+          </div>
+          <div class="d-flex flex-wrap gap-2">
+            <span class="badge badge-primary">Technology</span>
+            <span class="badge badge-primary">Politics</span>
+            <span class="badge badge-primary">Environment</span>
+            <span class="badge badge-primary">Health</span>
+            <span class="badge badge-primary">Space</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">
+            <i class="fas fa-search me-2"></i>Search
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="subscribeModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="fas fa-bell me-2"></i>Stay Updated
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p class="lead">Get breaking news and exclusive stories delivered to your inbox.</p>
+          <form>
+            <div class="mb-3">
+              <input type="email" class="form-control" placeholder="Enter your email address" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Interests</label>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="techCheck" checked>
+                <label class="form-check-label" for="techCheck">Technology</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="politicsCheck">
+                <label class="form-check-label" for="politicsCheck">Politics</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="environmentCheck">
+                <label class="form-check-label" for="environmentCheck">Environment</label>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Later</button>
+          <button type="button" class="btn btn-primary">
+            <i class="fas fa-envelope me-2"></i>Subscribe
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasMenu">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">
+        <i class="fas fa-compass me-2"></i>Navigation
+      </h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+      <nav class="nav nav-pills flex-column">
+        <a class="nav-link" href="#hero">
+          <i class="fas fa-home me-2"></i>Home
+        </a>
+        <a class="nav-link" href="#top-stories">
+          <i class="fas fa-fire me-2"></i>Top Stories
+        </a>
+        <a class="nav-link" href="#tech">
+          <i class="fas fa-microchip me-2"></i>Technology
+        </a>
+        <a class="nav-link" href="#world">
+          <i class="fas fa-globe me-2"></i>World News
+        </a>
+      </nav>
+      <hr>
+      <div class="mb-3">
+        <h6 class="text-muted">Quick Actions</h6>
+        <button class="btn btn-outline-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#searchModal">
+          <i class="fas fa-search me-2"></i>Search
+        </button>
+        <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#subscribeModal">
+          <i class="fas fa-bell me-2"></i>Subscribe
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Initialize particles
+    function createParticles() {
+      const particles = document.getElementById('particles');
+      if (!particles) return;
+      const particleCount = window.innerWidth < 768 ? 20 : 40;
+
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.width = Math.random() * 6 + 2 + 'px';
+        particle.style.height = particle.style.width;
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        particles.appendChild(particle);
+      }
+    }
+
+    // Counter animation
+    function animateCounter(element, target) {
+      let current = 0;
+      const increment = target / 100;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          current = target;
+          clearInterval(timer);
+        }
+        element.textContent = Math.floor(current).toLocaleString();
+        if (target === 99) element.textContent += '%';
+      }, 20);
+    }
+
+    // Initialize counters
+    function initCounters() {
+      const counters = document.querySelectorAll('[data-count]');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const target = parseInt(entry.target.dataset.count);
+            animateCounter(entry.target, target);
+            observer.unobserve(entry.target);
+          }
+        });
+      });
+      counters.forEach(counter => observer.observe(counter));
+    }
+
+    // Progress bar animation
+    function animateProgressBars() {
+      const progressBars = document.querySelectorAll('.progress-bar');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const bar = entry.target;
+            const percentage = bar.dataset.percentage || bar.style.width;
+            bar.style.width = '0%';
+            setTimeout(() => {
+              bar.style.width = percentage;
+            }, 200);
+            observer.unobserve(bar);
+          }
+        });
+      });
+      progressBars.forEach(bar => observer.observe(bar));
+    }
+
+
+    // Navbar scroll effect
+    function initNavbarScroll() {
+      const navbar = document.getElementById('navbar');
+      if (!navbar) return;
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      });
+    }
+
+    // Scroll to top functionality
+    function initScrollToTop() {
+      const scrollTop = document.getElementById('scrollTop');
+      if (!scrollTop) return;
+      window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+          scrollTop.classList.add('show');
+        } else {
+          scrollTop.classList.remove('show');
+        }
+      });
+    }
+
+    // Modal content loading
+    function initModalContent() {
+      const modal = document.getElementById('newsModal');
+      if (!modal) return;
+      const modalTitle = document.getElementById('modalTitle');
+      const modalBody = document.getElementById('modalBody');
+
+      const articles = {
+        'election': {
+          title: 'Elections 2025: The Battle for Tomorrow',
+          content: `
+          <img src="https://source.unsplash.com/800x400/?election,democracy" class="img-fluid rounded mb-4" alt="Elections">
+          <p class="lead">The 2025 elections represent a pivotal moment in modern democracy, with unprecedented voter engagement and innovative campaign strategies reshaping the political landscape.</p>
+          <p>As candidates present radically different visions for the future, voters are faced with choices that will impact generations. Key issues dominating the campaign include:</p>
+          <ul>
+            <li>Climate action and environmental policy</li>
+            <li>Economic recovery and job creation</li>
+            <li>Healthcare system reform</li>
+            <li>Technology regulation and privacy rights</li>
+          </ul>
+          <p>Polling data indicates this could be the highest voter turnout in decades, with young voters playing a decisive role in the outcome.</p>
+        `
+        },
+        'stocks': {
+          title: 'Tech Stocks Soar to New Heights',
+          content: `
+          <img src="https://source.unsplash.com/800x400/?stock-market,charts" class="img-fluid rounded mb-4" alt="Stock Market">
+          <p class="lead">The technology sector is experiencing unprecedented growth, with AI and renewable energy companies leading the charge in market valuations.</p>
+          <p>Key market highlights include:</p>
+          <div class="row g-3 my-4">
+            <div class="col-md-4 text-center">
+              <div class="feature-card p-3">
+                <div class="stat-number">+127%</div>
+                <div class="stat-label">AI Sector Growth</div>
+              </div>
+            </div>
+            <div class="col-md-4 text-center">
+              <div class="feature-card p-3">
+                <div class="stat-number">$2.4T</div>
+                <div class="stat-label">Market Cap</div>
+              </div>
+            </div>
+            <div class="col-md-4 text-center">
+              <div class="feature-card p-3">
+                <div class="stat-number">89%</div>
+                <div class="stat-label">Investor Confidence</div>
+              </div>
+            </div>
+          </div>
+          <p>Analysts attribute this surge to a combination of factors, including breakthroughs in generative AI, increased global demand for cloud computing, and significant government investment in green technologies. This robust performance is expected to continue, though experts advise cautious optimism due to potential regulatory changes on the horizon.</p>
+        `
+        },
+        'mars': {
+          title: 'Mars Mission Reaches Milestone',
+          content: `
+          <img src="https://source.unsplash.com/800x400/?mars,rover" class="img-fluid rounded mb-4" alt="Mars Rover">
+          <p class="lead">An international collaboration of space agencies has announced a major breakthrough in the "Odyssey One" Mars mission, bringing the prospect of human colonization closer to reality.</p>
+          <p>The mission's advanced rover, 'Perseverance II', has successfully demonstrated a novel in-situ resource utilization (ISRU) technique, extracting both water and oxygen from Martian soil. This is a critical step towards creating a self-sustaining habitat on the Red Planet.</p>
+          <h5>Key Achievements:</h5>
+          <ul>
+            <li>Successful extraction of 100 liters of water from subsurface ice deposits.</li>
+            <li>Generation of 50 grams of breathable oxygen from the Martian atmosphere.</li>
+            <li>Deployment of a network of autonomous weather and seismic sensors.</li>
+          </ul>
+          <p>Scientists are hailing this as the most significant step in space exploration this century. The next phase involves testing the viability of growing crops in a specialized bio-dome using the extracted resources.</p>
+        `
+        },
+        'gene-therapy': {
+          title: 'Gene Therapy Success',
+          content: `
+          <img src="https://source.unsplash.com/800x400/?dna,science,lab" class="img-fluid rounded mb-4" alt="Gene Therapy">
+          <p class="lead">A groundbreaking gene therapy treatment has shown a 95% success rate in late-stage clinical trials, offering hope for millions suffering from a rare genetic disorder.</p>
+          <p>The therapy, known as 'GeneCure-X', uses a modified adeno-associated virus (AAV) to deliver a correct copy of the defective gene directly into patient cells. The trials, conducted across 12 countries, involved 200 participants and showed remarkable results with minimal side effects.</p>
+          <blockquote class="blockquote">
+            <p>"We are on the cusp of a new era in medicine. What was once science fiction is now a clinical reality."</p>
+            <footer class="blockquote-footer">Lead Researcher, Dr. Evelyn Reed</footer>
+          </blockquote>
+          <p>The treatment is now undergoing final review for regulatory approval, with experts anticipating it could be available to the public within the next 18 months. This success is expected to accelerate research into similar therapies for a wide range of other genetic conditions.</p>
+        `
+        },
+        'crypto': {
+          title: 'Digital Currency Evolution',
+          content: `
+          <img src="https://source.unsplash.com/800x400/?blockchain,bitcoin" class="img-fluid rounded mb-4" alt="Cryptocurrency">
+          <p class="lead">Central banks and major financial institutions are accelerating their adoption of digital currencies and blockchain technology, signaling a fundamental shift in the global financial landscape.</p>
+          <p>While cryptocurrencies like Bitcoin and Ethereum continue to see mainstream adoption, the real revolution is happening behind the scenes with the development of Central Bank Digital Currencies (CBDCs). Over 100 countries are now in various stages of exploring or piloting their own digital currencies.</p>
+          <h5>Impacts of this evolution include:</h5>
+          <ul>
+            <li><strong>Faster Transactions:</strong> Cross-border payments could be settled in seconds instead of days.</li>
+            <li><strong>Increased Transparency:</strong> Blockchain ledgers offer unprecedented auditability, potentially reducing fraud.</li>
+            <li><strong>Financial Inclusion:</strong> Digital currencies could provide access to financial services for unbanked populations.</li>
+          </ul>
+          <p>However, significant challenges remain, including concerns about privacy, cybersecurity, and the potential for governmental overreach. The next few years will be critical in shaping the future of money.</p>
+        `
+        },
+        'climate-summit': {
+          title: 'Global Climate Summit 2025',
+          content: `
+          <img src="https://source.unsplash.com/800x400/?united-nations,conference" class="img-fluid rounded mb-4" alt="Climate Summit">
+          <p class="lead">The Global Climate Summit 2025 concluded today with a historic agreement that experts are calling the "Quantum Leap Accord," establishing the most ambitious and legally binding environmental targets to date.</p>
+          <p>In a landmark move, over 150 nations have pledged to:</p>
+          <ul>
+            <li>Triple their renewable energy capacity by 2035.</li>
+            <li>Phase out the use of coal-fired power plants by 2040 for developed nations and 2050 for developing nations.</li>
+            <li>Establish a $1 trillion annual fund to support green technology innovation and climate adaptation in vulnerable countries.</li>
+            <li>Implement a global carbon pricing mechanism.</li>
+          </ul>
+          <p>The accord was the result of intense negotiations and represents a major diplomatic victory. While activists have praised the ambition, they also emphasize that the real work of implementation and accountability begins now. The agreement includes a robust five-year review mechanism to ensure countries stay on track with their commitments.</p>
+        `
+        }
+      };
+
+      modal.addEventListener('show.bs.modal', function(event) {
+        const button = event.relatedTarget;
+        const articleKey = button.getAttribute('data-article');
+        const article = articles[articleKey];
+
+        const defaultContent = `
+        <div class="text-center">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="mt-2">Loading article content...</p>
+        </div>`;
+
+        modalTitle.textContent = 'Full Story';
+        modalBody.innerHTML = defaultContent;
+
+        setTimeout(() => { // Simulate network delay
+          if (article) {
+            modalTitle.textContent = article.title;
+            modalBody.innerHTML = article.content;
+          } else {
+            modalTitle.textContent = 'Article Not Found';
+            modalBody.innerHTML = '<p>The requested article could not be found. Please try again later.</p>';
+          }
+        }, 500);
+      });
+
+      modal.addEventListener('hidden.bs.modal', function() {
+        const defaultContent = `
+        <div class="text-center">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="mt-2">Loading article content...</p>
+        </div>`;
+        modalTitle.textContent = 'Full Story';
+        modalBody.innerHTML = defaultContent;
+      });
+    }
+
+    // Initialize Bootstrap components
+    function initBootstrapComponents() {
+      // Popovers
+      const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+      popoverTriggerList.map(function(popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl);
+      });
+
+      // Toasts
+      const welcomeToastEl = document.getElementById('welcomeToast');
+      if (welcomeToastEl) {
+        const welcomeToast = new bootstrap.Toast(welcomeToastEl);
+        setTimeout(() => {
+          welcomeToast.show();
+        }, 1500);
+      }
+    }
+
+    // Highlight active nav link on scroll
+    function initActiveNavOnScroll() {
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('#navbarNav .nav-link');
+
+      const observerOptions = {
+        root: null,
+        rootMargin: '-30% 0px -70% 0px',
+        threshold: 0
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const activeLink = document.querySelector(`#navbarNav .nav-link[href="#${entry.target.id}"]`);
+            navLinks.forEach(link => link.classList.remove('active'));
+            if (activeLink) {
+              activeLink.classList.add('active');
+            }
+          }
+        });
+      }, observerOptions);
+
+      sections.forEach(section => {
+        observer.observe(section);
+      });
+    }
+
+    // Fade out loading screen
+    function initLoadingScreen() {
+      const loadingScreen = document.getElementById('loading');
+      if (loadingScreen) {
+        window.addEventListener('load', () => {
+          loadingScreen.classList.add('fade-out');
+          setTimeout(() => {
+            loadingScreen.style.display = 'none';
+          }, 500);
+        });
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      createParticles();
+      initCounters();
+      animateProgressBars();
+      initNavbarScroll();
+      initScrollToTop();
+      initModalContent();
+      initBootstrapComponents();
+      initActiveNavOnScroll();
+      initLoadingScreen();
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">  
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aura Smart Earbuds - Premium Wireless Audio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+    :root {
+      --primary: #00b8f4;
+      --primary-dark: #007bb8;
+      --text-primary: #111827;
+      --text-secondary: #6b7280;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8f9fa;
+      --border: #e0e7ff;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+      --success: #10b981;
+      --warning: #f59e0b;
+      --error: #ef4444;
+    }
+
+    .dark-theme {
+      --text-primary: #f9fafb;
+      --text-secondary: #d1d5db;
+      --bg-primary: #1f2937;
+      --bg-secondary: #111827;
+      --border: #374151;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-secondary);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+
+    /* Enhanced Header */
+    .header {
+      background: linear-gradient(135deg, #121212, #1a1a1a, var(--primary));
+      padding: 3rem 2rem;
+      text-align: center;
+      color: white;
+      font-weight: 900;
+      font-size: 2.5rem;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="white" opacity="0.1"/><circle cx="80" cy="30" r="1.5" fill="white" opacity="0.1"/></svg>') repeat;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Enhanced Navigation */
+    .nav-bar {
+      background: var(--bg-primary);
+      padding: 1rem 0;
+      border-bottom: 2px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      position: relative;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--primary);
+      background: rgba(0, 184, 244, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .cart-icon {
+      position: relative;
+      color: var(--primary);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .cart-icon:hover {
+      transform: scale(1.1);
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--error);
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+
+    /* Enhanced Main Container */
+    .main-container {
+      max-width: 1200px;
+      margin: 3rem auto;
+      background: var(--bg-primary);
+      padding: 3rem;
+      box-shadow: var(--shadow-lg);
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+
+    /* Product Showcase */
+    .product-showcase {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+      align-items: center;
+    }
+
+    .product-info {
+      padding: 2rem;
+    }
+
+    .product-title {
+      color: var(--text-primary);
+      font-weight: 900;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .product-subtitle {
+      color: var(--text-secondary);
+      font-size: 1.3rem;
+      font-weight: 400;
+      margin-bottom: 2rem;
+    }
+
+    .price-section {
+      margin: 2rem 0;
+    }
+
+    .price-options {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .price-option {
+      flex: 1;
+      padding: 1.5rem;
+      border: 2px solid var(--border);
+      border-radius: 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: var(--bg-secondary);
+    }
+
+    .price-option:hover, .price-option.selected {
+      border-color: var(--primary);
+      background: rgba(0, 184, 244, 0.1);
+      transform: translateY(-3px);
+    }
+
+    .price-option h4 {
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .price {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--text-primary);
+    }
+
+    .original-price {
+      text-decoration: line-through;
+      color: var(--text-secondary);
+      font-size: 1.2rem;
+      margin-right: 0.5rem;
+    }
+
+    .discount {
+      background: var(--success);
+      color: white;
+      padding: 0.2rem 0.5rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* Color Selection */
+    .color-selection {
+      margin: 2rem 0;
+    }
+
+    .color-options {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .color-option {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .color-option.selected {
+      border-color: var(--primary);
+      transform: scale(1.1);
+    }
+
+    .color-option::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .color-option.selected::after {
+      opacity: 1;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .btn-primary-custom {
+      flex: 2;
+      background: var(--primary);
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-primary-custom:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-secondary-custom {
+      flex: 1;
+      background: transparent;
+      color: var(--primary);
+      padding: 1rem 2rem;
+      border: 2px solid var(--primary);
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary-custom:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    /* Enhanced Hero Images */
+    .hero-images {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .hero-image {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .hero-image:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .hero-image:hover img {
+      transform: scale(1.1);
+    }
+
+    /* Features Section */
+    .features-section {
+      margin: 4rem 0;
+    }
+
+    .section-title {
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: var(--bg-secondary);
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      text-align: center;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 184, 244, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .feature-card:hover::before {
+      left: 100%;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+
+    .feature-icon {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover .feature-icon {
+      transform: scale(1.1) rotateY(180deg);
+    }
+
+    .feature-title {
+      font-weight: 700;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .feature-description {
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Reviews Section */
+    .reviews-section {
+      margin: 4rem 0;
+    }
+
+    .review-item {
+      background: var(--bg-secondary);
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      border-radius: 20px;
+      border-left: 5px solid var(--primary);
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .review-item::before {
+      content: '"';
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      font-size: 3rem;
+      color: var(--primary);
+      opacity: 0.3;
+      font-family: serif;
+    }
+
+    .review-item:hover {
+      transform: translateX(10px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .review-text {
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    .review-rating {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .stars {
+      color: #ffd700;
+      font-size: 1.2rem;
+    }
+
+    .highlight {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* Notification System */
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 1rem 1.5rem;
+      background: var(--success);
+      color: white;
+      border-radius: 10px;
+      box-shadow: var(--shadow-lg);
+      z-index: 2000;
+      transform: translateX(400px);
+      transition: transform 0.3s ease;
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 1rem;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 1000;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--text-secondary);
+      background: var(--bg-primary);
+      border-top: 2px solid var(--border);
+      margin-top: 4rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .main-container {
+        margin: 2rem 1rem;
+        padding: 2rem 1.5rem;
+      }
+      
+      .product-showcase {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      
+      .product-title {
+        font-size: 2.5rem;
+      }
+      
+      .header {
+        font-size: 2rem;
+        padding: 2rem 1rem;
+      }
+      
+      .nav-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .price-options {
+        flex-direction: column;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+      }
+
+      .hero-images {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+
+  <div class="notification" id="notification">
+    <i class="fas fa-check-circle"></i>
+    <span id="notification-text">Added to cart!</span>
+  </div>
+
+  <header class="header">
+    <div style="position: relative; z-index: 2;">
+      🎵 Aura Smart Earbuds - Premium Wireless Audio Experience
+    </div>
+  </header>
+
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <a href="#home" class="logo">Aura</a>
+      <div class="nav-links">
+        <a href="#home" class="nav-link active">Home</a>
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#reviews" class="nav-link">Reviews</a>
+        <a href="#contact" class="nav-link">Contact</a>
+        <div class="cart-icon" onclick="toggleCart()">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count" id="cart-count">0</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-container">
+    <div class="product-showcase">
+      <div class="product-info">
+        <h1 class="product-title">AURA PRO MAX</h1>
+        <p class="product-subtitle">Experience the Future of Audio Technology with AI-Powered Noise Cancellation</p>
+        
+        <div class="price-section">
+          <h3 style="color: var(--text-primary); margin-bottom: 1rem;">Choose Your Model</h3>
+          <div class="price-options">
+            <div class="price-option selected" data-model="basic" data-price="8999">
+              <h4>Aura Basic</h4>
+              <div class="price">₹8,999</div>
+              <small style="color: var(--text-secondary);">Essential Features</small>
+            </div>
+            <div class="price-option" data-model="pro" data-price="12999">
+              <h4>Aura Pro</h4>
+              <div>
+                <span class="original-price">₹15,999</span>
+                <span class="price">₹12,999</span>
+                <span class="discount">19% OFF</span>
+              </div>
+              <small style="color: var(--text-secondary);">Best Value</small>
+            </div>
+            <div class="price-option" data-model="max" data-price="18999">
+              <h4>Aura Pro Max</h4>
+              <div>
+                <span class="original-price">₹22,999</span>
+                <span class="price">₹18,999</span>
+                <span class="discount">17% OFF</span>
+              </div>
+              <small style="color: var(--text-secondary);">Premium Experience</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="color-selection">
+          <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Choose Color</h4>
+          <div class="color-options">
+            <div class="color-option selected" style="background: #1a1a1a;" data-color="black"></div>
+            <div class="color-option" style="background: #ffffff; border: 1px solid #ddd;" data-color="white"></div>
+            <div class="color-option" style="background: linear-gradient(45deg, #667eea, #764ba2);" data-color="blue"></div>
+            <div class="color-option" style="background: linear-gradient(45deg, #f093fb, #f5576c);" data-color="pink"></div>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn-primary-custom" onclick="addToCart()">
+            <i class="fas fa-shopping-cart"></i> Add to Cart - ₹<span id="current-price">8,999</span>
+          </button>
+          <button class="btn-secondary-custom" onclick="buyNow()">
+            <i class="fas fa-bolt"></i> Buy Now
+          </button>
+        </div>
+
+        <div style="margin-top: 2rem; padding: 1rem; background: rgba(0, 184, 244, 0.1); border-radius: 10px;">
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+            <i class="fas fa-truck" style="color: var(--primary);"></i>
+            <span style="font-weight: 600;">Free Delivery</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+            <i class="fas fa-undo" style="color: var(--primary);"></i>
+            <span style="font-weight: 600;">30-Day Return Policy</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fas fa-shield-alt" style="color: var(--primary);"></i>
+            <span style="font-weight: 600;">2-Year Warranty</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-images">
+        <div class="hero-image">
+          <img src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Aura Earbuds Premium Design">
+        </div>
+        <div class="hero-image">
+          <img src="https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Charging Case">
+        </div>
+        <div class="hero-image">
+          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Perfect Fit">
+        </div>
+        <div class="hero-image">
+          <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Active Lifestyle">
+        </div>
+      </div>
+    </div>
+
+    <div class="features-section" id="features">
+      <h2 class="section-title">Why Choose Aura?</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🎧</div>
+          <h3 class="feature-title">AI Noise Cancellation</h3>
+          <p class="feature-description">Intelligent adaptive noise cancellation that learns your environment and filters unwanted sounds perfectly.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔋</div>
+          <h3 class="feature-title">30-Hour Battery Life</h3>
+          <p class="feature-description">Extended listening with 8 hours + 22 hours charging case. Quick charge gives 3 hours in just 15 minutes.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💧</div>
+          <h3 class="feature-title">IPX7 Water Resistance</h3>
+          <p class="feature-description">Built to withstand sweat, rain, and intense workouts. Perfect for any adventure.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <h3 class="feature-title">Smart Touch Controls</h3>
+          <p class="feature-description">Intuitive touch controls for music, calls, and voice assistant. Seamless connectivity with all devices.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎵</div>
+          <h3 class="feature-title">Studio-Quality Audio</h3>
+          <p class="feature-description">Custom-tuned drivers deliver pristine sound with deep bass, clear mids, and crisp highs.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🏃</div>
+          <h3 class="feature-title">Ergonomic Comfort</h3>
+          <p class="feature-description">Designed for all-day comfort with multiple ear tip sizes for the perfect secure fit.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="reviews-section" id="reviews">
+      <h2 class="section-title">What Our Customers Say</h2>
+      
+      <div class="review-item">
+        <p class="review-text"><span class="highlight">"I love the ANC! Superb!!"</span> The noise cancellation is incredible for my daily commute.</p>
+        <div class="review-rating">
+          <span class="stars">⭐⭐⭐⭐⭐</span>
+          <span style="color: var(--text-secondary);">- Rajesh K.</span>
+        </div>
+      </div>
+
+      <div class="review-item">
+        <p class="review-text">Superb Quality and well balanced... <span class="highlight">👌👌</span> The sound quality is amazing for the price point.</p>
+        <div class="review-rating">
+          <span class="stars">⭐⭐⭐⭐⭐</span>
+          <span style="color: var(--text-secondary);">- Priya S.</span>
+        </div>
+      </div>
+
+      <div class="review-item">
+        <p class="review-text">Comfortable for long time use. Sound quality and Bluetooth connectivity are pretty good. Perfect for workouts!</p>
+        <div class="review-rating">
+          <span class="stars">⭐⭐⭐⭐☆</span>
+          <span style="color: var(--text-secondary);">- Amit R.</span>
+        </div>
+      </div>
+
+      <div class="review-item">
+        <p class="review-text">As the name suggests, the earbuds give good performance in bass. They are comfortable too. The battery backup is super. They say 8 hours, but it gives <span class="highlight">10-12 hours of battery backup</span> on 50% volume in one full charge. Overall review..... Very good earbuds.</p>
+        <div class="review-rating">
+          <span class="stars">⭐⭐⭐⭐⭐</span>
+          <span style="color: var(--text-secondary);">- Vikram M.</span>
+        </div>
+      </div>
+
+      <div class="review-item">
+        <p class="review-text"><span class="highlight">Best battery life... With comfort</span> 🎵 These earbuds are perfect for my 12-hour work days.</p>
+        <div class="review-rating">
+          <span class="stars">⭐⭐⭐⭐⭐</span>
+          <span style="color: var(--text-secondary);">- Sneha T.</span>
+        </div>
+      </div>
+
+      <div class="review-item">
+        <p class="review-text">Extremely happy with my buy of Aura Pro Max, super long battery and <span class="highlight">awesome sound</span> :) Highly recommended!</p>
+        <div class="review-rating">
+          <span class="stars">⭐⭐⭐⭐⭐</span>
+          <span style="color: var(--text-secondary);">- Arjun D.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    &copy; 2025 Aura Smart Earbuds. Crafted for audiophiles worldwide. | 
+    <a href="#" style="color: var(--primary);">Privacy Policy</a> | 
+    <a href="#" style="color: var(--primary);">Terms of Service</a>
+  </footer>
+
+  <script>
+    let cartCount = 0;
+    let selectedModel = 'basic';
+    let selectedColor = 'black';
+    let currentPrice = 8999;
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark-theme');
+      const toggle = document.querySelector('.theme-toggle');
+      toggle.textContent = document.body.classList.contains('dark-theme') ? '☀️' : '🌙';
+    }
+
+    function showNotification(message) {
+      const notification = document.getElementById('notification');
+      const notificationText = document.getElementById('notification-text');
+      notificationText.textContent = message;
+      notification.classList.add('show');
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 3000);
+    }
+
+    function updatePrice() {
+      document.getElementById('current-price').textContent = currentPrice.toLocaleString();
+    }
+
+    // Price option selection
+    document.querySelectorAll('.price-option').forEach(option => {
+      option.addEventListener('click', function() {
+        document.querySelectorAll('.price-option').forEach(opt => opt.classList.remove('selected'));
+        this.classList.add('selected');
+        selectedModel = this.dataset.model;
+        currentPrice = parseInt(this.dataset.price);
+        updatePrice();
+      });
+    });
+
+    // Color option selection
+    document.querySelectorAll('.color-option').forEach(option => {
+      option.addEventListener('click', function() {
+        document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
+        this.classList.add('selected');
+        selectedColor = this.dataset.color;
+      });
+    });
+
+    function addToCart() {
+      cartCount++;
+      document.getElementById('cart-count').textContent = cartCount;
+      showNotification(`Aura ${selectedModel.charAt(0).toUpperCase() + selectedModel.slice(1)} (${selectedColor}) added to cart!`);
+      
+      // Add cart animation
+      const cartIcon = document.querySelector('.cart-icon');
+      cartIcon.style.transform = 'scale(1.2)';
+      setTimeout(() => {
+        cartIcon.style.transform = 'scale(1)';
+      }, 200);
+    }
+
+    function buyNow() {
+      showNotification(`Redirecting to checkout for Aura ${selectedModel.charAt(0).toUpperCase() + selectedModel.slice(1)}...`);
+      // Here you would redirect to payment gateway
+      setTimeout(() => {
+        alert('This would redirect to payment gateway in a real implementation');
+      }, 1000);
+    }
+
+    function toggleCart() {
+      if (cartCount === 0) {
+        showNotification('Your cart is empty. Add some products first!');
+      } else {
+        showNotification(`You have ${cartCount} item(s) in your cart`);
+      }
+    }
+
+    // Smooth scrolling for navigation
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetId) || document.querySelector('.main-container');
+        targetSection.scrollIntoView({ behavior: 'smooth' });
+        
+        // Update active link
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // Scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe all animated elements
+    document.querySelectorAll('.review-item, .feature-card, .hero-image').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'all 0.6s ease';
+      observer.observe(el);
+    });
+
+    // Initialize
+    updatePrice();
+  </script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+### Welcome Endpoint
+GET http://localhost:3000/
+Accept: application/json
+
+### Health Check
+GET http://localhost:3000/health
+Accept: application/json
+
+### Get All Movies
+GET http://localhost:3000/movies
+Accept: application/json
+
+### Get Movie by ID
+GET http://localhost:3000/movies/1
+Accept: application/json
+
+### Create New Movie
+POST http://localhost:3000/movies
+Content-Type: application/json
+
+{
+  "title": "Inception",
+  "year": 2010,
+  "director": "Christopher Nolan",
+  "genre": "Sci-Fi",
+  "rating": 8.8
+}
+
+### Update Movie (PUT)
+PUT http://localhost:3000/movies/1
+Content-Type: application/json
+
+{
+  "title": "The Dark Knight Rises",
+  "year": 2012,
+  "director": "Christopher Nolan", 
+  "genre": "Action",
+  "rating": 8.4
+}
+
+### Partial Update (PATCH)
+PATCH http://localhost:3000/movies/2
+Content-Type: application/json
+
+{
+  "rating": 9.1
+}
+
+### Delete Movie
+DELETE http://localhost:3000/movies/3
+Accept: application/json
+
+### Test Invalid ID
+GET http://localhost:3000/movies/abc
+Accept: application/json
+
+### Test Non-existent Movie
+GET http://localhost:3000/movies/999
+Accept: application/json
+
+### Create Another Movie
+POST http://localhost:3000/movies
+Content-Type: application/json
+
+{
+  "title": "Blade Runner 2049",
+  "year": 2017,
+  "director": "Denis Villeneuve",
+  "genre": "Sci-Fi",
+  "rating": 8.0
+}
+
+### Test Duplicate Movie (Should fail)
+POST http://localhost:3000/movies
+Content-Type: application/json
+
+{
+  "title": "The Dark Knight",
+  "year": 2008,
+  "director": "Christopher Nolan",
+  "genre": "Action",
+  "rating": 9.0
+}
+
+### Test Invalid Data (Should fail)
+POST http://localhost:3000/movies
+Content-Type: application/json
+
+{
+  "title": "",
+  "year": "invalid",
+  "director": "",
+  "genre": ""
+}

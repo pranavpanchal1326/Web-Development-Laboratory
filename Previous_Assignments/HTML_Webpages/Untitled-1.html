@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electra Smartwatch - Revolutionary Wearable Tech</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/ui-lightness/jquery-ui.css">
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4338ca;
+      --accent: #06b6d4;
+      --secondary: #64748b;
+      --text: #0f172a;
+      --text-light: #64748b;
+      --bg: #ffffff;
+      --bg-light: #f8fafc;
+      --bg-dark: #0f172a;
+      --border: #e2e8f0;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+      --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.1);
+      --gradient: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    }
+
+    [data-theme="dark"] {
+      --text: #f8fafc;
+      --text-light: #cbd5e1;
+      --bg: #0f172a;
+      --bg-light: #1e293b;
+      --border: #334155;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      transition: all 0.3s ease;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    [data-theme="dark"] .header {
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--primary);
+    }
+
+    .theme-toggle {
+      background: var(--gradient);
+      border: none;
+      color: white;
+      padding: 0.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 6rem 0;
+      text-align: center;
+      background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg) 100%);
+    }
+
+    .hero-title {
+      font-size: 4rem;
+      font-weight: 900;
+      margin-bottom: 1rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+    }
+
+    .hero-subtitle {
+      font-size: 1.5rem;
+      color: var(--text-light);
+      margin-bottom: 3rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--gradient);
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 25px 50px rgba(99, 102, 241, 0.3);
+      color: white;
+    }
+
+    /* Product Gallery */
+    .product-section {
+      padding: 6rem 0;
+    }
+
+    .gallery-container {
+      background: var(--bg);
+      border-radius: 24px;
+      box-shadow: var(--shadow-lg);
+      padding: 3rem;
+      margin-bottom: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient);
+    }
+
+    .gallery {
+      position: relative;
+      height: 500px;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .gallery-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      border-radius: 20px;
+    }
+
+    .gallery-image.active {
+      opacity: 1;
+    }
+
+    .gallery-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 2rem;
+    }
+
+    .gallery-btn {
+      background: var(--gradient);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+    }
+
+    .gallery-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .gallery-indicators {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--border);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .indicator.active {
+      background: var(--primary);
+      transform: scale(1.2);
+    }
+
+    /* Widgets Grid */
+    .widgets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .widget-card {
+      background: var(--bg);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      border: 1px solid var(--border);
+    }
+
+    .widget-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .widget-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg-light);
+      color: var(--text);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    .btn-primary {
+      width: 100%;
+      background: var(--gradient);
+      color: white;
+      border: none;
+      padding: 1rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Radio Group */
+    .radio-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .radio-item {
+      position: relative;
+    }
+
+    .radio-item input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .radio-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .radio-item input[type="radio"]:checked + .radio-label {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: white;
+    }
+
+    /* Tabs */
+    .tabs-container {
+      grid-column: 1 / -1;
+    }
+
+    .ui-tabs {
+      border: none;
+      background: transparent;
+    }
+
+    .ui-tabs .ui-tabs-nav {
+      border: none;
+      background: transparent;
+      padding: 0;
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .ui-tabs .ui-tabs-nav li {
+      border: none;
+      background: transparent;
+      margin: 0;
+    }
+
+    .ui-tabs .ui-tabs-nav li a {
+      padding: 1rem 2rem;
+      border: 2px solid var(--border);
+      border-radius: 25px;
+      background: var(--bg);
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .ui-tabs .ui-tabs-nav li.ui-tabs-active a {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: white;
+    }
+
+    .ui-tabs .ui-tabs-panel {
+      border: none;
+      background: var(--bg-light);
+      border-radius: 16px;
+      padding: 2rem;
+    }
+
+    /* Interactive Box */
+    .interactive-section {
+      padding: 4rem 0;
+      text-align: center;
+    }
+
+    .interactive-box {
+      width: 400px;
+      height: 200px;
+      background: var(--gradient);
+      border-radius: 20px;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 2rem auto;
+      cursor: move;
+      user-select: none;
+      box-shadow: var(--shadow-lg);
+      transition: all 0.3s ease;
+    }
+
+    .interactive-box:hover {
+      transform: scale(1.05);
+    }
+
+    /* Features Section */
+    .features-section {
+      padding: 6rem 0;
+      background: var(--bg-light);
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 4rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+    }
+
+    .feature-card {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: var(--bg);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+    }
+
+    .feature-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .feature-description {
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .nav {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+      }
+
+      .widgets-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery {
+        height: 300px;
+      }
+
+      .interactive-box {
+        width: 90%;
+        max-width: 350px;
+      }
+
+      .radio-group {
+        justify-content: center;
+      }
+
+      .gallery-controls {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in-up {
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    /* Click highlight effect */
+    .highlight {
+      background: rgba(99, 102, 241, 0.1);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <nav class="nav">
+        <div class="logo">Electra</div>
+        <ul class="nav-links">
+          <li><a href="#" class="nav-link">Home</a></li>
+          <li><a href="#product" class="nav-link">Product</a></li>
+          <li><a href="#features" class="nav-link">Features</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+        <button class="theme-toggle" id="themeToggle">
+          <i class="fas fa-moon"></i>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1 class="hero-title fade-in-up">Electra Smartwatch</h1>
+      <p class="hero-subtitle fade-in-up">Revolutionary technology meets timeless design. Experience the future on your wrist.</p>
+      <a href="#product" class="hero-cta fade-in-up">
+        <i class="fas fa-bolt"></i>
+        Explore Now
+      </a>
+    </div>
+  </section>
+
+  <!-- Product Section -->
+  <section class="product-section" id="product">
+    <div class="container">
+      <!-- Gallery -->
+      <div class="gallery-container">
+        <div class="gallery">
+          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80" alt="Electra Smartwatch Black" class="gallery-image active">
+          <img src="./Skagen-Falster-SKT5002_05.jpg" alt="Electra Smartwatch Silver" class="gallery-image">
+          <img src="./s-l1200.webp" alt="Electra Smartwatch Sport" class="gallery-image">
+          <img src="./images.jpg" alt="Electra Smartwatch Lifestyle" class="gallery-image">
+        </div>
+        <div class="gallery-controls">
+          <button class="gallery-btn" id="prevBtn">
+            <i class="fas fa-chevron-left"></i> Previous
+          </button>
+          <div class="gallery-indicators">
+            <span class="indicator active" data-slide="0"></span>
+            <span class="indicator" data-slide="1"></span>
+            <span class="indicator" data-slide="2"></span>
+            <span class="indicator" data-slide="3"></span>
+          </div>
+          <button class="gallery-btn" id="nextBtn">
+            Next <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Widgets -->
+      <div class="widgets-grid">
+        <!-- Search Widget -->
+        <div class="widget-card">
+          <h3 class="widget-title">
+            <i class="fas fa-search"></i> Search Products
+          </h3>
+          <div class="form-group">
+            <label class="form-label">Find Your Perfect Model</label>
+            <input type="text" id="productSearch" class="form-control" placeholder="Type model name or feature...">
+          </div>
+        </div>
+
+        <!-- Buy Button Widget -->
+        <div class="widget-card">
+          <h3 class="widget-title">
+            <i class="fas fa-shopping-cart"></i> Purchase
+          </h3>
+          <button class="btn-primary" id="buyBtn">
+            <i class="fas fa-bolt"></i> Buy Now - $299
+          </button>
+        </div>
+
+        <!-- Color Selection Widget -->
+        <div class="widget-card">
+          <h3 class="widget-title">
+            <i class="fas fa-palette"></i> Choose Color
+          </h3>
+          <div class="radio-group">
+            <div class="radio-item">
+              <input type="radio" id="colorBlack" name="color" value="black" checked>
+              <label for="colorBlack" class="radio-label">
+                <span style="width: 16px; height: 16px; background: #000; border-radius: 50%; display: block;"></span>
+                Midnight Black
+              </label>
+            </div>
+            <div class="radio-item">
+              <input type="radio" id="colorSilver" name="color" value="silver">
+              <label for="colorSilver" class="radio-label">
+                <span style="width: 16px; height: 16px; background: #c0c0c0; border-radius: 50%; display: block;"></span>
+                Space Silver
+              </label>
+            </div>
+            <div class="radio-item">
+              <input type="radio" id="colorGold" name="color" value="gold">
+              <label for="colorGold" class="radio-label">
+                <span style="width: 16px; height: 16px; background: #ffd700; border-radius: 50%; display: block;"></span>
+                Rose Gold
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Demo Booking Widget -->
+        <div class="widget-card">
+          <h3 class="widget-title">
+            <i class="fas fa-calendar"></i> Book Demo
+          </h3>
+          <div class="form-group">
+            <label class="form-label">Select Date</label>
+            <input type="text" id="demoDate" class="form-control" placeholder="Choose your preferred date">
+          </div>
+        </div>
+
+        <!-- Tabs Widget -->
+        <div class="widget-card tabs-container">
+          <h3 class="widget-title">
+            <i class="fas fa-info-circle"></i> Product Information
+          </h3>
+          <div id="productTabs">
+            <ul>
+              <li><a href="#specs">Specifications</a></li>
+              <li><a href="#reviews">Reviews</a></li>
+              <li><a href="#tech">Technology</a></li>
+            </ul>
+            <div id="specs">
+              <h4>Technical Specifications</h4>
+              <p><strong>Display:</strong> 1.4" AMOLED, 454×454 resolution</p>
+              <p><strong>Battery:</strong> Up to 14 days typical use</p>
+              <p><strong>Water Resistance:</strong> 5ATM + IP68</p>
+              <p><strong>Connectivity:</strong> Bluetooth 5.3, Wi-Fi, GPS</p>
+              <p><strong>Health Sensors:</strong> Heart rate, SpO2, stress, sleep tracking</p>
+            </div>
+            <div id="reviews">
+              <h4>Customer Reviews</h4>
+              <div style="margin-bottom: 1rem;">
+                <div style="color: #fbbf24; margin-bottom: 0.5rem;">★★★★★</div>
+                <p><strong>Sarah M.</strong> - "Absolutely love this smartwatch! The battery life is incredible and the health tracking features are spot-on."</p>
+              </div>
+              <div style="margin-bottom: 1rem;">
+                <div style="color: #fbbf24; margin-bottom: 0.5rem;">★★★★★</div>
+                <p><strong>Michael R.</strong> - "Best smartwatch I've owned. Sleek design and amazing build quality."</p>
+              </div>
+            </div>
+            <div id="tech">
+              <h4>Advanced Technology</h4>
+              <p><strong>Processor:</strong> Dual-core 1.2GHz ARM Cortex-M55</p>
+              <p><strong>Memory:</strong> 32GB storage, 2GB RAM</p>
+              <p><strong>Operating System:</strong> ElectraOS 2.0</p>
+              <p><strong>AI Features:</strong> Smart notifications, adaptive brightness, health insights</p>
+              <p><strong>Charging:</strong> Wireless charging, 0-100% in 90 minutes</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Section -->
+      <div class="interactive-section">
+        <h2 class="section-title">Interactive Experience</h2>
+        <p style="color: var(--text-light); margin-bottom: 2rem;">Drag and resize the box below to explore our interface</p>
+        <div id="interactiveBox" class="interactive-box">
+          <div>
+            <i class="fas fa-hand-rock" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i>
+            Drag & Resize Me!
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section" id="features">
+    <div class="container">
+      <h2 class="section-title">Why Choose Electra?</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-battery-full"></i>
+          </div>
+          <h3 class="feature-title">14-Day Battery</h3>
+          <p class="feature-description">Extended battery life with fast wireless charging. Never worry about running out of power during your day.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-heartbeat"></i>
+          </div>
+          <h3 class="feature-title">Health Monitoring</h3>
+          <p class="feature-description">Comprehensive health tracking including heart rate, blood oxygen, sleep quality, and stress levels.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3 class="feature-title">Water Resistant</h3>
+          <p class="feature-description">5ATM water resistance means you can swim, shower, and exercise without worry.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-brain"></i>
+          </div>
+          <h3 class="feature-title">AI Powered</h3>
+          <p class="feature-description">Smart AI learns your habits and provides personalized insights and recommendations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Gallery functionality
+      let currentSlide = 0;
+      const slides = $('.gallery-image');
+      const indicators = $('.indicator');
+      const totalSlides = slides.length;
+
+      function showSlide(index) {
+        slides.removeClass('active');
+        indicators.removeClass('active');
+        slides.eq(index).addClass('active');
+        indicators.eq(index).addClass('active');
+      }
+
+      function nextSlide() {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        showSlide(currentSlide);
+      }
+
+      function prevSlide() {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        showSlide(currentSlide);
+      }
+
+      $('#nextBtn').click(nextSlide);
+      $('#prevBtn').click(prevSlide);
+
+      indicators.click(function() {
+        currentSlide = $(this).data('slide');
+        showSlide(currentSlide);
+      });
+
+      // Auto-play gallery
+      setInterval(nextSlide, 5000);
+
+      // Autocomplete
+      $('#productSearch').autocomplete({
+        source: [
+          "Electra Pro",
+          "Electra Sport",
+          "Electra Classic",
+          "Electra Elite",
+          "Health Tracker",
+          "Fitness Watch",
+          "Smart Watch",
+          "Wireless Charging"
+        ],
+        minLength: 2
+      });
+
+      // Button functionality
+      $('#buyBtn').button().click(function() {
+        const selectedColor = $('input[name="color"]:checked').val();
+        alert(`Adding Electra Smartwatch (${selectedColor}) to cart!`);
+      });
+
+      // Radio buttons
+      $('input[type="radio"]').checkboxradio();
+
+      // Datepicker
+      $('#demoDate').datepicker({
+        minDate: 0,
+        maxDate: "+3M",
+        dateFormat: "dd/mm/yy"
+      });
+
+      // Tabs
+      $('#productTabs').tabs();
+
+      // Interactive effects
+      $('#specs p').click(function() {
+        $(this).toggleClass('highlight');
+      });
+
+      // Draggable and resizable
+      $('#interactiveBox').draggable({
+        containment: '.interactive-section',
+        cursor: 'move'
+      }).resizable({
+        minWidth: 200,
+        minHeight: 100,
+        maxWidth: 600,
+        maxHeight: 400
+      });
+
+      // Theme toggle
+      $('#themeToggle').click(function() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        document.documentElement.setAttribute('data-theme', newTheme);
+        
+        const icon = $(this).find('i');
+        if (newTheme === 'dark') {
+          icon.removeClass('fa-moon').addClass('fa-sun');
+        } else {
+          icon.removeClass('fa-sun').addClass('fa-moon');
+        }
+      });
+
+      // Smooth scrolling
+      $('a[href^="#"]').click(function(e) {
+        e.preventDefault();
+        const target = $($(this).attr('href'));
+        if (target.length) {
+          $('html, body').animate({
+            scrollTop: target.offset().top - 100
+          }, 800);
+        }
+      });
+
+      // Color selection feedback
+      $('input[name="color"]').change(function() {
+        const color = $(this).val();
+        const colorName = color.charAt(0).toUpperCase() + color.slice(1);
+        
+        // Update button text with selected color
+        $('#buyBtn').html(`<i class="fas fa-bolt"></i> Buy ${colorName} - $299`);
+      });
+
+      // Add fade-in animation to elements
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('fade-in-up');
+          }
+        });
+      }, observerOptions);
+
+      $('.widget-card, .feature-card').each(function() {
+        observer.observe(this);
+      });
+    });
+  </script>
+</body>
+</html>
